@@ -44,6 +44,19 @@ async function boot() {
   if ("serviceWorker" in navigator) {
     // relative registration → correct scope under the /mahjong/ Pages subpath
     navigator.serviceWorker.register("./sw.js").catch(() => {});
+    // when a new SW activates and purges old caches, reload so we never run stale code
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (refreshing) return;
+      refreshing = true;
+      location.reload();
+    });
+    navigator.serviceWorker.addEventListener("message", (e) => {
+      if (e.data?.type === "SW_UPDATED" && !refreshing) {
+        refreshing = true;
+        location.reload();
+      }
+    });
   }
 
   catalog = await api.catalog();
