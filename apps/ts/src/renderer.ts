@@ -29,17 +29,22 @@ export class Renderer {
   theme: ThemeTokens;
   dims: LayoutDims = { w: 10, h: 8, maxZ: 1 };
 
-  // tuned tile metrics (px at scale 1). Tiles are PORTRAIT (taller than wide,
-  // ~1:1.3 — the classic mahjong proportion) and laid out edge-to-edge (no
-  // overlap) like Vita Mahjong; the board scales to fit.
-  TW = 54;
-  TH = 70;
-  PX = 54; // horizontal pitch (== TW, tiles touch)
-  PY = 70; // vertical pitch (== TH)
-  ZX = 6; // small horizontal offset per z layer (stacked look)
-  DZ = 9; // small vertical offset per z layer
-  PAD = 24; // uniform padding around the centered content box
+  // Vita-style pseudo-3D metrics (px at scale 1). The board reads as
+  // viewed from above-front: each tile = face + side strip (thickness),
+  // vertical pitch slightly exceeds the face so a sliver of side shows
+  // per row, and each layer lifts UP-LEFT (off-axis) to sit on the one
+  // below (LAYER_OFFSET from the Godot VitaProject reference).
+  TW = 54; // face width
+  TH = 74; // face height
+  SIDE = 9; // tile thickness drawn below the face
+  PX = 54; // horizontal pitch (half-unit = TW/2)
+  PY = 82; // vertical pitch = face + 8px visible side
+  LIFT_X = -4; // per-layer x shift (off-axis, from LAYER_OFFSET (-4,-10))
+  LIFT_Y = -9; // per-layer y shift (up)
+  PAD = 20;
   private skinCss: string | null = null;
+  private minPx = 0;
+  private minPy = 0;
 
   constructor(root: HTMLElement, theme: ThemeTokens) {
     this.root = root;
@@ -95,19 +100,31 @@ export class Renderer {
   // build tile elements once per puzzle
   build(tiles: RenderTile[], onClick: (idx: number) => void) {
     this.clear();
-    // Half-unit grid: tile coords are in half-units; full tile = 2×2 half-units.
-    // Tile pixel pos = (x/2 * TW, y/2 * TH) + z lift. Content extent measured
-    // from actual slot footprints, then centered in a padded box.
-    let maxPX = 0, maxPY = 0;
+    // half-unit coords -> px: base position + per-layer up-left lift.
+    // Track min offsets so lifted tiles aren't clipped at the box edge.
+    let minPx = Infinity, minPy = Infinity, maxPx = -Infinity, maxPy = -Infinity;
+    const pos = (t: RenderTile) => ({
+      x: (t.x / 2) * this.TW + t.z * this.LIFT_X,
+      y: (t.y / 2) * this.PY + t.z * this.LIFT_Y,
+    });
     for (const t of tiles) {
-      maxPX = Math.max(maxPX, (t.x / 2) * this.TW + this.TW + t.z * this.ZX);
-      maxPY = Math.max(maxPY, (t.y / 2) * this.TH + this.TH + t.z * this.DZ);
+      const p = pos(t);
+      minPx = Math.min(minPx, p.x);
+      minPy = Math.min(minPy, p.y);
+      maxPx = Math.max(maxPx, p.x + this.TW);
+      maxPy = Math.max(maxPy, p.y + this.TH + this.SIDE);
     }
-    this.boardEl.style.width = `${maxPX + this.PAD}px`;
-    this.boardEl.style.height = `${maxPY + this.PAD}px`;
+    this.minPx = minPx === Infinity ? 0 : minPx;
+    this.minPy = minPy === Infinity ? 0 : minPy;
+    const w = maxPx - this.minPx;
+    const h = maxPy - this.minPy;
+    this.boardEl.style.width = `${w + this.PAD}px`;
+    this.boardEl.style.height = `${h + this.PAD}px`;
 
-    for (const t of tiles) {
-      if (t.removed) continue;
+    // paint order: layer, then row, then column (straddled stacks)
+    const ordered = [...tiles].filter((t) => !t.removed)
+      .sort((a, b) => a.z - b.z || a.y - b.y || a.x - b.x);
+    for (const t of ordered) {
       const el = document.createElement("div");
       el.className = "tile";
       el.dataset.idx = String(t.idx);
@@ -147,13 +164,12 @@ export class Renderer {
   }
 
   positionTile(el: HTMLElement, t: RenderTile) {
-    // half-unit coords: full-tile steps are x%2==0 && y%2==0 (L0);
-    // straddling layers have odd x/y offsets of half a tile.
-    const px = (t.x / 2) * this.TW + t.z * this.ZX + this.PAD / 2;
-    const py = (t.y / 2) * this.TH + t.z * this.DZ + this.PAD / 2;
+    // half-unit grid + per-layer off-axis lift (up-left), normalized so the
+    // lifted board stays inside the padded box
+    const px = (t.x / 2) * this.TW + t.z * this.LIFT_X - this.minPx + this.PAD / 2;
+    const py = (t.y / 2) * this.PY + t.z * this.LIFT_Y - this.minPy + this.PAD / 2;
     el.style.left = `${px}px`;
     el.style.top = `${py}px`;
-    // stacking: z dominates, then row (y), then column (x)
     el.style.zIndex = String(t.z * 1000 + t.y * 32 + t.x);
   }
 
@@ -161,6 +177,8 @@ export class Renderer {
     const t = this.theme;
     const faceId = el.dataset.faceId!;
     const svg = api.face_svg(faceId, t.id);
+    el.style.width = `${this.TW}px`;
+    el.style.height = `${this.TH + this.SIDE}px`;
     el.innerHTML = `
       <div class="tile-side"></div>
       <div class="tile-face" style="background:${t.palette.tileFace}">

@@ -214,35 +214,75 @@ fn render_board() {
         container.append_child(&inner).unwrap();
 
         let free: Vec<usize> = board.all_free();
-        let max_z = board.layout.max_z();
-        let half_pad = 12.0_f64; // 24/2 — content centered inside the padded box
+        // legal pairs, for the stacked-pair selectable rule
+        let moves: Vec<(usize, usize)> = board.find_matches();
         let theme = mahjong_core::themes::embedded()
             .themes
             .iter()
             .find(|t| t.id == THEME_ID.with(|t| *t.borrow()))
             .cloned()
             .unwrap_or_else(|| mahjong_core::themes::embedded().themes[0].clone());
-        for i in 0..board.faces.len() {
+
+        // pass 1: content extent incl. per-layer lift (up-left) + side strip
+        let mut min_px = f64::INFINITY;
+        let mut min_py = f64::INFINITY;
+        let mut max_px = f64::NEG_INFINITY;
+        let mut max_py = f64::NEG_INFINITY;
+        for k in board.layout.keys.iter() {
+            let x = (k.x as f64 / 2.0) * 54.0 + k.z as f64 * -4.0;
+            let y = (k.y as f64 / 2.0) * 82.0 + k.z as f64 * -9.0;
+            min_px = min_px.min(x);
+            min_py = min_py.min(y);
+            max_px = max_px.max(x + 54.0);
+            max_py = max_py.max(y + 74.0 + 9.0);
+        }
+        if min_px.is_infinite() {
+            min_px = 0.0;
+            min_py = 0.0;
+            max_px = 0.0;
+            max_py = 0.0;
+        }
+        let bw = (max_px - min_px) + 20.0;
+        let bh = (max_py - min_py) + 20.0;
+        inner.set_attribute(
+            "style",
+            &format!("width:{}px;height:{}px;transform-origin:center center;", bw, bh),
+        )
+        .unwrap();
+
+        // paint order: layer, then row, then column (straddled stacks)
+        let mut order: Vec<usize> = (0..board.faces.len())
+            .filter(|&i| board.faces[i] != u8::MAX)
+            .collect();
+        order.sort_by_key(|&i| {
+            let k = board.layout.keys[i];
+            (k.z, k.y, k.x)
+        });
+        for i in order {
             let face = board.faces[i];
-            if face == u8::MAX {
-                continue;
-            }
             let key = board.layout.keys[i];
             let tile = doc().create_element("div").unwrap();
             tile.set_class_name("tile");
             if free.contains(&i) {
                 tile.set_class_name("tile free");
+            } else {
+                // covered but part of a legal stacked pair -> selectable
+                let playable_under = moves
+                    .iter()
+                    .any(|&(a, b)| a == i || b == i);
+                if playable_under {
+                    tile.set_attribute("data-playable", "1").unwrap();
+                }
             }
             tile.set_attribute("data-idx", &i.to_string()).unwrap();
             tile.set_attribute("data-face-id", FACE_IDS[face as usize]).unwrap();
-            // position: half-unit grid — straddling layers offset half a tile
-            let px = (key.x as f64 / 2.0) * 54.0 + key.z as f64 * 6.0 + half_pad;
-            let py = (key.y as f64 / 2.0) * 75.0 + key.z as f64 * 9.0 + half_pad;
+            let px = (key.x as f64 / 2.0) * 54.0 + key.z as f64 * -4.0 - min_px + 10.0;
+            let py = (key.y as f64 / 2.0) * 82.0 + key.z as f64 * -9.0 - min_py + 10.0;
             let zidx = key.z as i32 * 1000 + key.y as i32 * 32 + key.x as i32;
             tile.set_attribute(
                 "style",
                 &format!(
-                    "left:{}px;top:{}px;z-index:{};--tile-edge:{};--tile-side:{};",
+                    "left:{}px;top:{}px;width:54px;height:83px;z-index:{};--tile-edge:{};--tile-side:{};",
                     px, py, zidx, theme.palette.tile_edge, theme.palette.tile_side
                 ),
             )
@@ -265,25 +305,11 @@ fn render_board() {
             inner.append_child(&tile).unwrap();
         }
 
-        // fit board to viewport: content extent from half-unit footprints
-        let mut bw = 0.0_f64;
-        let mut bh = 0.0_f64;
-        for k in board.layout.keys.iter() {
-            bw = bw.max((k.x as f64 / 2.0) * 54.0 + 54.0 + k.z as f64 * 6.0);
-            bh = bh.max((k.y as f64 / 2.0) * 75.0 + 75.0 + k.z as f64 * 9.0);
-        }
-        let bw = bw + 24.0;
-        let bh = bh + 24.0;
-        inner.set_attribute(
-            "style",
-            &format!("width:{}px;height:{}px;transform-origin:center center;", bw, bh),
-        )
-        .unwrap();
         if let Some(host) = container.dyn_ref::<HtmlElement>() {
             let avail_w = host.client_width() as f64 - 8.0;
             let avail_h = host.client_height() as f64 - 8.0;
             if avail_w > 0.0 && avail_h > 0.0 {
-                let scale = (avail_w / bw).min(avail_h / bh).min(1.6);
+                let scale = (avail_w / bw).min(avail_h / bh).min(1.6).max(0.2);
                 inner
                     .set_attribute(
                         "style",
@@ -306,8 +332,13 @@ fn on_tile(idx: usize) {
         let mut st = s.borrow_mut();
         let sel = st.selected;
         let board = st.board.as_mut().expect("board");
+        // selectable: free, OR covered but part of a legal stacked pair
+        // (bottom of a stack is playable-under when its cover is its partner)
         if !board.is_free(idx) {
-            return;
+            let playable = board.find_matches().iter().any(|&(a, b)| a == idx || b == idx);
+            if !playable {
+                return;
+            }
         }
         match sel {
             None => {
