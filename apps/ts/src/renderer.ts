@@ -82,9 +82,17 @@ export class Renderer {
   // build tile elements once per puzzle
   build(tiles: RenderTile[], onClick: (idx: number) => void) {
     this.clear();
-    const pad = this.TW; // room for shadows/side
-    this.boardEl.style.width = `${(this.dims.w + 1) * this.TW + pad}px`;
-    this.boardEl.style.height = `${(this.dims.h + 1) * this.TH + this.DZ * (this.dims.maxZ + 1) + pad}px`;
+    // content extent: tiles span x*TW .. x*TW + TW + z*10 (right) and
+    // y*TH .. y*TH + TH + maxZ*DZ (down). Box = content + uniform pad, and
+    // content is centered inside the box so the VISIBLE pile is centered.
+    const pad = this.TW;
+    const zSpread = this.dims.maxZ * 10;
+    const contentW = this.dims.w * this.TW + zSpread;
+    const contentH = this.dims.h * this.TH + this.DZ * (this.dims.maxZ + 1);
+    this.boardEl.style.width = `${contentW + pad}px`;
+    this.boardEl.style.height = `${contentH + pad}px`;
+    // offset so content is centered within the box (pad/2 on each side)
+    this.boardEl.style.setProperty("--z-shift", `${pad / 2}px`);
 
     for (const t of tiles) {
       if (t.removed) continue;
@@ -127,8 +135,8 @@ export class Renderer {
   }
 
   positionTile(el: HTMLElement, t: RenderTile) {
-    const px = t.x * this.TW + t.z * 10;
-    const py = t.y * this.TH + (this.dims.maxZ - t.z) * this.DZ;
+    const px = t.x * this.TW + t.z * 10 + this.TW / 2;
+    const py = t.y * this.TH + (this.dims.maxZ - t.z) * this.DZ + this.TW / 2;
     el.style.left = `${px}px`;
     el.style.top = `${py}px`;
     el.style.zIndex = String(t.z * 100 + t.y * 2);
@@ -186,6 +194,9 @@ export class Renderer {
 
   private paintBoard() {
     const t = this.theme;
-    this.boardEl.parentElement!.style.background = `radial-gradient(ellipse at center, ${t.palette.boardBg} 0%, ${t.palette.boardBg2} 75%)`;
+    // drive the CSS-gradient vars so the vignette overlay stays intact
+    this.boardEl.parentElement!.style.setProperty("--skin-a", t.palette.boardBg);
+    this.boardEl.parentElement!.style.setProperty("--skin-b", t.palette.boardBg2);
+    this.boardEl.parentElement!.style.background = "";
   }
 }

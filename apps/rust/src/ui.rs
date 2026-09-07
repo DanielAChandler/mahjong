@@ -92,6 +92,7 @@ pub fn run() {
 "#,
     );
 
+    apply_theme_shell();
     start_campaign(1);
     bind_toolbar();
     start_timer_loop();
@@ -152,6 +153,8 @@ fn render_board() {
         container.append_child(&inner).unwrap();
 
         let free: Vec<usize> = board.all_free();
+        let max_z = board.layout.max_z();
+        let half_pad = 28.0_f64; // 56/2 — content centered inside the padded box
         for i in 0..board.faces.len() {
             let face = board.faces[i];
             if face == u8::MAX {
@@ -166,11 +169,13 @@ fn render_board() {
             tile.set_attribute("data-idx", &i.to_string()).unwrap();
             tile.set_attribute("data-face-id", FACE_IDS[face as usize]).unwrap();
             // position: x * TW + z*10, y * TH + (maxZ - z) * DZ
-            let max_z = board.layout.max_z();
-            let px = key.x * 56 + key.z as i32 * 10;
-            let py = key.y * 72 + (max_z as i32 - key.z as i32) * 14;
-            tile.set_attribute("style", &format!("left:{}px;top:{}px;", px, py))
-                .unwrap();
+            let px = key.x as f64 * 56.0 + key.z as f64 * 10.0 + half_pad;
+            let py = key.y as f64 * 72.0 + (max_z as f64 - key.z as f64) * 14.0 + half_pad;
+            tile.set_attribute(
+                "style",
+                &format!("left:{}px;top:{}px;", px, py),
+            )
+            .unwrap();
             let svg = mahjong_core::face_art::face_svg(FACE_IDS[face as usize], THEME_ID.with(|t| *t.borrow()));
             let face_html = format!(
                 r#"<div class="tile-side"></div><div class="tile-face" style="background:#f7f2e7"><svg viewBox="0 0 139.764 200" width="100%" height="100%">{}</svg></div>"#,
@@ -192,9 +197,10 @@ fn render_board() {
         // fit board to viewport (mirrors TS renderer.fitToViewport)
         let max_x = board.layout.keys.iter().map(|k| k.x).max().unwrap_or(8);
         let max_y = board.layout.keys.iter().map(|k| k.y).max().unwrap_or(7);
-        let max_z = board.layout.max_z();
-        let bw = (max_x + 2) as f64 * 56.0 + 56.0;
-        let bh = (max_y + 2) as f64 * 72.0 + 14.0 * (max_z as f64 + 1.0) + 56.0;
+        let z_spread = max_z as f64 * 10.0;
+        // content box = content extent + uniform pad (centered via half_pad above)
+        let bw = (max_x + 1) as f64 * 56.0 + z_spread + 56.0;
+        let bh = (max_y + 1) as f64 * 72.0 + 14.0 * (max_z as f64 + 1.0) + 56.0;
         inner.set_attribute(
             "style",
             &format!("width:{}px;height:{}px;transform-origin:center center;", bw, bh),
@@ -408,16 +414,11 @@ fn apply_theme_shell() {
         .find(|t| t.id == THEME_ID.with(|t| *t.borrow()))
         .cloned()
         .unwrap_or_else(|| mahjong_core::themes::embedded().themes[0].clone());
-    if let Some(body) = doc().body() {
-        let bg = format!(
-            "radial-gradient(ellipse at center, {} 0%, {} 75%)",
-            theme.palette.board_bg, theme.palette.board_bg2
-        );
-        body.dyn_ref::<HtmlElement>()
-            .unwrap()
-            .style()
-            .set_property("background", &bg)
-            .ok();
+    // drive the CSS skin vars on #board so the vignette overlay stays intact
+    if let Some(b) = doc().get_element_by_id("board") {
+        let st = b.dyn_ref::<HtmlElement>().unwrap().style();
+        st.set_property("--skin-a", &theme.palette.board_bg).ok();
+        st.set_property("--skin-b", &theme.palette.board_bg2).ok();
     }
     if let Some(h) = doc().get_element_by_id("topbar") {
         h.dyn_ref::<HtmlElement>()
