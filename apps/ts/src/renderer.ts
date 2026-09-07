@@ -29,11 +29,18 @@ export class Renderer {
   theme: ThemeTokens;
   dims: LayoutDims = { w: 10, h: 8, maxZ: 1 };
 
-  // tuned tile metrics (px at scale 1) — classic mahjong proportion (~0.73 W/H)
+  // tuned tile metrics (px at scale 1). Tiles OVERLAP like real mahjong
+  // solitaire: horizontal pitch = half a tile, vertical pitch ≈ 0.6 tile.
+  // This halves board width (=> ~2× bigger tiles) and gives the dense,
+  // "large tiles" look of Vita Mahjong. The solver's free-tile logic works
+  // on logical (x,y,z) grid coords, so this is a render-only change.
   TW = 54;
   TH = 74;
-  DZ = 14; // visual z offset (isometric-ish)
-  PAD = 36; // uniform padding around the centered content box
+  PX = 27; // horizontal pitch (50% overlap)
+  PY = 44; // vertical pitch (~40% overlap)
+  ZX = 6; // horizontal offset per z layer
+  DZ = 10; // vertical offset per z layer
+  PAD = 24; // uniform padding around the centered content box
   private skinCss: string | null = null;
 
   constructor(root: HTMLElement, theme: ThemeTokens) {
@@ -90,15 +97,15 @@ export class Renderer {
   // build tile elements once per puzzle
   build(tiles: RenderTile[], onClick: (idx: number) => void) {
     this.clear();
-    // content extent: tiles span x*TW .. x*TW + TW + z*10 (right) and
-    // y*TH .. y*TH + TH + maxZ*DZ (down). Box = content + uniform pad, and
-    // content is centered inside the box so the VISIBLE pile is centered.
-    const pad = this.PAD;
-    const zSpread = this.dims.maxZ * 10;
-    const contentW = this.dims.w * this.TW + zSpread;
-    const contentH = this.dims.h * this.TH + this.DZ * (this.dims.maxZ + 1);
-    this.boardEl.style.width = `${contentW + pad}px`;
-    this.boardEl.style.height = `${contentH + pad}px`;
+    // content extent (px): tiles span x*PX .. x*PX + TW (right) and
+    // y*PY .. y*PY + TH (down), plus the z lift. Box = content + pad, centered.
+    const maxX = this.dims.w - 1;
+    const maxY = this.dims.h - 1;
+    const zSpread = this.dims.maxZ * this.ZX;
+    const contentW = maxX * this.PX + this.TW + zSpread;
+    const contentH = maxY * this.PY + this.TH + this.DZ * (this.dims.maxZ + 1);
+    this.boardEl.style.width = `${contentW + this.PAD}px`;
+    this.boardEl.style.height = `${contentH + this.PAD}px`;
 
     for (const t of tiles) {
       if (t.removed) continue;
@@ -141,11 +148,13 @@ export class Renderer {
   }
 
   positionTile(el: HTMLElement, t: RenderTile) {
-    const px = t.x * this.TW + t.z * 10 + this.PAD / 2;
-    const py = t.y * this.TH + (this.dims.maxZ - t.z) * this.DZ + this.PAD / 2;
+    const px = t.x * this.PX + t.z * this.ZX + this.PAD / 2;
+    const py = t.y * this.PY + (this.dims.maxZ - t.z) * this.DZ + this.PAD / 2;
     el.style.left = `${px}px`;
     el.style.top = `${py}px`;
-    el.style.zIndex = String(t.z * 100 + t.y * 2);
+    // stacking: z dominates, then row (y), then column (x) so overlapping
+    // right/lower tiles paint over their left/upper neighbors.
+    el.style.zIndex = String(t.z * 1000 + t.y * 32 + t.x);
   }
 
   paintFace(el: HTMLElement) {

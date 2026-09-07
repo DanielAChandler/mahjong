@@ -58,7 +58,7 @@ await new Promise((r) => setTimeout(r, 200));
 
 const dlg = document.getElementById("menu-dialog");
 const open = dlg.hasAttribute("open") || dlg.classList.contains("polyfill-open");
-const options = dlg.querySelectorAll("#sel-layout option").length;
+const options = dlg.querySelectorAll("[data-layout]").length;
 
 console.log("TILES:", tiles);
 console.log("MENU_OPEN:", open);

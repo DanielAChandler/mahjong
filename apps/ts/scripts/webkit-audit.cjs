@@ -33,7 +33,7 @@ const bad = [];
   await ts.tap("#btn-menu");
   await ts.waitForTimeout(400);
   const layoutIds = await ts.evaluate(() =>
-    [...document.querySelectorAll("#sel-layout option")].map((o) => o.value));
+    [...document.querySelectorAll("[data-layout]")].map((o) => o.dataset.layout));
   console.log("TS layouts:", layoutIds.length, layoutIds.join(","));
   await ts.evaluate(() => {
     const d = document.querySelector("#menu-dialog");
@@ -43,14 +43,11 @@ const bad = [];
   await ts.waitForTimeout(300);
 
   for (const id of layoutIds) {
-    // open menu, set layout, load puzzle #1, close
+    // open menu, click the layout button (loads puzzle #1), close
     await ts.tap("#btn-menu");
     await ts.waitForTimeout(300);
     await ts.evaluate((id) => {
-      const sel = document.querySelector("#sel-layout");
-      sel.value = id;
-      document.querySelector("#inp-puzzle").value = "1";
-      document.querySelector('[data-act="load"]').click();
+      document.querySelector(`[data-layout="${id}"]`).click();
     }, id);
     await ts.waitForTimeout(1400);
     const m = await measure(ts);

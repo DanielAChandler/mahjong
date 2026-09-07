@@ -32,9 +32,14 @@ const { webkit } = require("playwright");
     });
     if (done === "cleared") { cleared = true; break; }
     if (done === "stuck") { console.log("STUCK at round", round); break; }
-    await page.tap(`[data-idx="${done.a}"]`);
+    // dispatch pointerdown directly (overlapping tiles make coordinate taps ambiguous)
+    await page.evaluate((idx) => {
+      document.querySelector(`[data-idx="${idx}"]`).dispatchEvent(new PointerEvent("pointerdown", { bubbles: true, cancelable: true }));
+    }, done.a);
     await page.waitForTimeout(100);
-    await page.tap(`[data-idx="${done.b}"]`);
+    await page.evaluate((idx) => {
+      document.querySelector(`[data-idx="${idx}"]`).dispatchEvent(new PointerEvent("pointerdown", { bubbles: true, cancelable: true }));
+    }, done.b);
     await page.waitForTimeout(480);
   }
 

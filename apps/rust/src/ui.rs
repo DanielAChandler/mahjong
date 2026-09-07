@@ -215,7 +215,7 @@ fn render_board() {
 
         let free: Vec<usize> = board.all_free();
         let max_z = board.layout.max_z();
-        let half_pad = 18.0_f64; // 36/2 — content centered inside the padded box
+        let half_pad = 12.0_f64; // 24/2 — content centered inside the padded box
         let theme = mahjong_core::themes::embedded()
             .themes
             .iter()
@@ -235,14 +235,15 @@ fn render_board() {
             }
             tile.set_attribute("data-idx", &i.to_string()).unwrap();
             tile.set_attribute("data-face-id", FACE_IDS[face as usize]).unwrap();
-            // position: x * TW + z*10, y * TH + (maxZ - z) * DZ
-            let px = key.x as f64 * 54.0 + key.z as f64 * 10.0 + half_pad;
-            let py = key.y as f64 * 74.0 + (max_z as f64 - key.z as f64) * 14.0 + half_pad;
+            // position: half-pitch overlap (x*27, y*44) + z lift
+            let px = key.x as f64 * 27.0 + key.z as f64 * 6.0 + half_pad;
+            let py = key.y as f64 * 44.0 + (max_z as f64 - key.z as f64) * 10.0 + half_pad;
+            let zidx = key.z as i32 * 1000 + key.y as i32 * 32 + key.x as i32;
             tile.set_attribute(
                 "style",
                 &format!(
-                    "left:{}px;top:{}px;--tile-edge:{};--tile-side:{};",
-                    px, py, theme.palette.tile_edge, theme.palette.tile_side
+                    "left:{}px;top:{}px;z-index:{};--tile-edge:{};--tile-side:{};",
+                    px, py, zidx, theme.palette.tile_edge, theme.palette.tile_side
                 ),
             )
             .unwrap();
@@ -267,10 +268,10 @@ fn render_board() {
         // fit board to viewport (mirrors TS renderer.fitToViewport)
         let max_x = board.layout.keys.iter().map(|k| k.x).max().unwrap_or(8);
         let max_y = board.layout.keys.iter().map(|k| k.y).max().unwrap_or(7);
-        let z_spread = max_z as f64 * 10.0;
+        let z_spread = max_z as f64 * 6.0;
         // content box = content extent + uniform pad (centered via half_pad above)
-        let bw = (max_x + 1) as f64 * 54.0 + z_spread + 36.0;
-        let bh = (max_y + 1) as f64 * 74.0 + 14.0 * (max_z as f64 + 1.0) + 36.0;
+        let bw = max_x as f64 * 27.0 + 54.0 + z_spread + 24.0;
+        let bh = max_y as f64 * 44.0 + 74.0 + 10.0 * (max_z as f64 + 1.0) + 24.0;
         inner.set_attribute(
             "style",
             &format!("width:{}px;height:{}px;transform-origin:center center;", bw, bh),

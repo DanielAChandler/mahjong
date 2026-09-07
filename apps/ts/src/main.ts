@@ -36,6 +36,7 @@ let game: Game | null = null;
 let renderer: Renderer;
 let currentMode: Mode = { kind: "campaign", level: 1 };
 let hintBudget = 5;
+let lastLayoutId = "turtle"; // last layout picked from the menu grid
 
 async function boot() {
   await api.init();
@@ -203,11 +204,10 @@ function openMenu() {
       <h3>Play</h3>
       <button data-act="next">▶ Continue campaign (Level ${nextLevel()})</button>
       <button data-act="daily">📅 Daily puzzle</button>
-      <div style="display:flex;gap:8px">
-        <input id="inp-puzzle" type="number" min="1" placeholder="puzzle #" />
-        <button data-act="load">Load #</button>
+      <h3>Layout</h3>
+      <div class="theme-row">
+        ${(catalog?.layouts ?? []).map((l) => `<button data-layout="${l.id}" class="${lastLayoutId === l.id ? "active" : ""}">${l.name}</button>`).join("")}
       </div>
-      <select id="sel-layout">${(catalog?.layouts ?? []).map((l) => `<option value="${l.id}">${l.name} (${l.tile_count})</option>`).join("")}</select>
     </section>
     <section>
       <h3>Theme</h3>
@@ -249,6 +249,14 @@ function openMenu() {
       openMenu();
       return;
     }
+    if (el.dataset.layout) {
+      lastLayoutId = el.dataset.layout;
+      currentMode = { kind: "infinite", id: 1, layoutId: lastLayoutId };
+      closeDialog(dlg);
+      game!.start(currentMode);
+      updatePowerups();
+      return;
+    }
     switch (el.dataset.act) {
       case "sound":
         save.settings.sound = !save.settings.sound;
@@ -268,17 +276,6 @@ function openMenu() {
         game!.start(currentMode);
         updatePowerups();
         break;
-      case "load": {
-        const v = Number((dlg.querySelector("#inp-puzzle") as HTMLInputElement).value);
-        const lay = (dlg.querySelector("#sel-layout") as HTMLSelectElement).value;
-        if (v > 0) {
-          currentMode = { kind: "infinite", id: v, layoutId: lay };
-          closeDialog(dlg);
-          game!.start(currentMode);
-          updatePowerups();
-        }
-        break;
-      }
       case "export": {
         const blob = new Blob([persist.exportJson(save)], { type: "application/json" });
         const a = document.createElement("a");
