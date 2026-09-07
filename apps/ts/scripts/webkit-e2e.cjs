@@ -16,31 +16,44 @@ const { webkit } = require("playwright");
   await page.waitForTimeout(2000);
 
   let cleared = false;
-  for (let round = 0; round < 40 && !cleared; round++) {
-    const done = await page.evaluate(() => {
+  for (let round = 0; round < 200 && !cleared; round++) {
+    const state = await page.evaluate(() => {
       const tiles = [...document.querySelectorAll(".tile")];
       if (tiles.length === 0) return "cleared";
-      const free = [...document.querySelectorAll(".tile.free")];
-      for (let i = 0; i < free.length; i++) {
-        for (let j = i + 1; j < free.length; j++) {
-          if (free[i].dataset.faceId === free[j].dataset.faceId) {
-            return { a: free[i].dataset.idx, b: free[j].dataset.idx };
-          }
-        }
-      }
-      return "stuck";
+      return { n: tiles.length };
     });
-    if (done === "cleared") { cleared = true; break; }
-    if (done === "stuck") { console.log("STUCK at round", round); break; }
-    // dispatch pointerdown directly (overlapping tiles make coordinate taps ambiguous)
+    if (state === "cleared") { cleared = true; break; }
+    // query the engine's state directly (bypasses the hint power-up economy):
+    // window.__game exposes the Game instance in dev/test builds
+    let pair = await page.evaluate(async () => {
+      const g = window.__game;
+      if (!g) return null;
+      const st = await g.apiState();
+      return st.hint ? [String(st.hint[0]), String(st.hint[1])] : null;
+    });
+    if (!pair) {
+      // ask the app for a hint (costs coins; the coin count is large enough
+      // in tests) — always a legal pair including stacked ones
+      await page.evaluate(() => {
+        document.querySelector("#pu-hint")?.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true, cancelable: true }));
+      });
+      await page.waitForTimeout(300);
+      const hinted = await page.evaluate(() =>
+        [...document.querySelectorAll(".tile.hint")].map((t) => t.dataset.idx));
+      if (hinted.length < 2) {
+        console.log("NO HINT at round", round, "tiles", state.n);
+        break;
+      }
+      pair = [hinted[0], hinted[1]];
+    }
     await page.evaluate((idx) => {
       document.querySelector(`[data-idx="${idx}"]`).dispatchEvent(new PointerEvent("pointerdown", { bubbles: true, cancelable: true }));
-    }, done.a);
+    }, pair[0]);
     await page.waitForTimeout(100);
     await page.evaluate((idx) => {
       document.querySelector(`[data-idx="${idx}"]`).dispatchEvent(new PointerEvent("pointerdown", { bubbles: true, cancelable: true }));
-    }, done.b);
-    await page.waitForTimeout(480);
+    }, pair[1]);
+    await page.waitForTimeout(200);
   }
 
   await page.waitForTimeout(1000);

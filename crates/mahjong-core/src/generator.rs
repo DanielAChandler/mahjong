@@ -17,7 +17,7 @@
 //! everywhere, in both implementations.
 
 use crate::board::Board;
-use crate::layout::{CompiledLayout, SlotKey, TILE_W};
+use crate::layout::{CompiledLayout, SlotKey, TILE_H, TILE_W};
 use crate::rng::{seed_from_id, Pcg32};
 use crate::tiles::{distinct_groups_in_play, standard_deck};
 use serde::{Deserialize, Serialize};
@@ -115,8 +115,9 @@ fn peel_once(
     Some(order)
 }
 
-/// Free on the filled-then-partially-removed board: nothing above + not
-/// sandwiched (side cells with respect to the ORIGINAL layout neighbors).
+/// Free on the filled-then-partially-removed board (half-unit grid):
+/// footprint-overlap coverage from above + edge-touch side blocking —
+/// the same rule as board.rs, so peels are valid removal orders.
 fn free_indices(removed: &[bool], layout: &std::sync::Arc<CompiledLayout>) -> Vec<usize> {
     let mut out = Vec::new();
     for i in 0..removed.len() {
@@ -124,22 +125,45 @@ fn free_indices(removed: &[bool], layout: &std::sync::Arc<CompiledLayout>) -> Ve
             continue;
         }
         let key = layout.keys[i];
-        let up = crate::layout::upper_key(key);
-        let covered = match layout.slot_index(up) {
-            Some(u) => !removed[u],
-            None => false,
-        };
+
+        // covered if any present higher-layer tile's footprint overlaps ours
+        let mut covered = false;
+        for (j, k) in layout.keys.iter().enumerate() {
+            if k.z <= key.z || j == i || removed[j] {
+                continue;
+            }
+            if k.x < key.x + TILE_W
+                && key.x < k.x + TILE_W
+                && k.y < key.y + TILE_H
+                && key.y < k.y + TILE_H
+            {
+                covered = true;
+                break;
+            }
+        }
         if covered {
             continue;
         }
-        let left = match layout.slot_index(SlotKey::new(key.x - TILE_W, key.y, key.z)) {
-            Some(l) => !removed[l],
-            None => false,
-        };
-        let right = match layout.slot_index(SlotKey::new(key.x + TILE_W, key.y, key.z)) {
-            Some(r) => !removed[r],
-            None => false,
-        };
+
+        // side blocking: same-layer tiles touching BOTH edges (y-overlap)
+        let y0 = key.y;
+        let y1 = key.y + TILE_H - 1;
+        let mut left = false;
+        let mut right = false;
+        for (j, k) in layout.keys.iter().enumerate() {
+            if k.z != key.z || j == i || removed[j] {
+                continue;
+            }
+            if k.y + TILE_H <= y0 || y1 + 1 <= k.y {
+                continue;
+            }
+            if k.x + TILE_W == key.x {
+                left = true;
+            }
+            if key.x + TILE_W == k.x {
+                right = true;
+            }
+        }
         if left && right {
             continue;
         }

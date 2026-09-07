@@ -95,15 +95,16 @@ export class Renderer {
   // build tile elements once per puzzle
   build(tiles: RenderTile[], onClick: (idx: number) => void) {
     this.clear();
-    // content extent (px): tiles span x*PX .. x*PX + TW (right) and
-    // y*PY .. y*PY + TH (down), plus the z lift. Box = content + pad, centered.
-    const maxX = this.dims.w - 1;
-    const maxY = this.dims.h - 1;
-    const zSpread = this.dims.maxZ * this.ZX;
-    const contentW = maxX * this.PX + this.TW + zSpread;
-    const contentH = maxY * this.PY + this.TH + this.DZ * (this.dims.maxZ + 1);
-    this.boardEl.style.width = `${contentW + this.PAD}px`;
-    this.boardEl.style.height = `${contentH + this.PAD}px`;
+    // Half-unit grid: tile coords are in half-units; full tile = 2×2 half-units.
+    // Tile pixel pos = (x/2 * TW, y/2 * TH) + z lift. Content extent measured
+    // from actual slot footprints, then centered in a padded box.
+    let maxPX = 0, maxPY = 0;
+    for (const t of tiles) {
+      maxPX = Math.max(maxPX, (t.x / 2) * this.TW + this.TW + t.z * this.ZX);
+      maxPY = Math.max(maxPY, (t.y / 2) * this.TH + this.TH + t.z * this.DZ);
+    }
+    this.boardEl.style.width = `${maxPX + this.PAD}px`;
+    this.boardEl.style.height = `${maxPY + this.PAD}px`;
 
     for (const t of tiles) {
       if (t.removed) continue;
@@ -146,12 +147,13 @@ export class Renderer {
   }
 
   positionTile(el: HTMLElement, t: RenderTile) {
-    const px = t.x * this.PX + t.z * this.ZX + this.PAD / 2;
-    const py = t.y * this.PY + (this.dims.maxZ - t.z) * this.DZ + this.PAD / 2;
+    // half-unit coords: full-tile steps are x%2==0 && y%2==0 (L0);
+    // straddling layers have odd x/y offsets of half a tile.
+    const px = (t.x / 2) * this.TW + t.z * this.ZX + this.PAD / 2;
+    const py = (t.y / 2) * this.TH + t.z * this.DZ + this.PAD / 2;
     el.style.left = `${px}px`;
     el.style.top = `${py}px`;
-    // stacking: z dominates, then row (y), then column (x) so overlapping
-    // right/lower tiles paint over their left/upper neighbors.
+    // stacking: z dominates, then row (y), then column (x)
     el.style.zIndex = String(t.z * 1000 + t.y * 32 + t.x);
   }
 

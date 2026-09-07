@@ -1,13 +1,15 @@
 //! Board model: placement + freedom queries + undo-able removals.
 //!
-//! Freedom rule (canonical for both implementations):
-//! - blocked from above: a PRESENT tile occupies the slot directly above
-//! - horizontally blocked: present tiles occupy cells on BOTH the left edge
-//!   column and the right edge column of the tile, same layer
+//! Freedom rule (canonical for both implementations; half-unit grid, tiles
+//! are TILE_W×TILE_H = 2×2 half-units):
+//! - blocked from above: a PRESENT higher-layer tile's footprint overlaps
+//!   this tile's footprint at all (straddled = covered)
+//! - horizontally blocked: PRESENT same-layer tiles touch BOTH the left and
+//!   the right edge of this tile (no gap) with overlapping y-ranges
 //! A move removes two free tiles whose faces match (flowers match any flower,
 //! seasons any season).
 
-use crate::layout::{upper_key, CompiledLayout, SlotKey, TILE_H, TILE_W};
+use crate::layout::{CompiledLayout, SlotKey, TILE_H, TILE_W};
 
 /// One removal record — enough to undo fully.
 #[derive(Debug, Clone, Copy)]
@@ -53,22 +55,50 @@ impl Board {
         }
     }
 
-    /// Present tiles block both edge columns of this tile on its layer?
-    /// Checks the adjacent cell column just outside each edge; with the
-    /// even-coordinate DSL invariant, any occupant there overlaps the edge.
+    /// Present same-layer tiles touch BOTH side edges (x-1 / x+TILE_W columns
+    /// with y-overlap)? Vita rule: sandwiched = not free.
     fn layer_blocked(&self, idx: usize) -> bool {
         let key = self.layout.keys[idx];
         let z = key.z;
-        let left_occ = self.cell_present(key.x - 1, key.y, z)
-            || self.cell_present(key.x - 1, key.y + TILE_H - 1, z);
-        let right_occ = self.cell_present(key.x + TILE_W, key.y, z)
-            || self.cell_present(key.x + TILE_W, key.y + TILE_H - 1, z);
-        left_occ && right_occ
+        let y0 = key.y;
+        let y1 = key.y + TILE_H - 1;
+        let mut left = false;
+        let mut right = false;
+        for (i, k) in self.layout.keys.iter().enumerate() {
+            if k.z != z || i == idx || self.faces[i] == u8::MAX {
+                continue;
+            }
+            // y-ranges overlap?
+            if k.y + TILE_H <= y0 || y1 + 1 <= k.y {
+                continue;
+            }
+            if k.x + TILE_W == key.x {
+                left = true; // touches left edge
+            }
+            if key.x + TILE_W == k.x {
+                right = true; // touches right edge
+            }
+        }
+        left && right
     }
 
+    /// Blocked from above: any present tile on a higher layer whose footprint
+    /// overlaps ours (straddling covers).
     fn covered_above(&self, idx: usize) -> bool {
-        let up = upper_key(self.layout.keys[idx]);
-        self.cell_present(up.x, up.y, up.z)
+        let key = self.layout.keys[idx];
+        for (i, k) in self.layout.keys.iter().enumerate() {
+            if k.z <= key.z || i == idx {
+                continue;
+            }
+            // footprint overlap?
+            if k.x < key.x + TILE_W && key.x < k.x + TILE_W
+                && k.y < key.y + TILE_H && key.y < k.y + TILE_H
+                && self.faces[i] != u8::MAX
+            {
+                return true;
+            }
+        }
+        false
     }
 
     /// Test/inspect helper: is any tile present directly above `idx`?
@@ -107,11 +137,16 @@ impl Board {
         out
     }
 
-    /// Vertical relation: is `b` directly on top of `a`?
+    /// Vertical relation: is `b` stacked over `a`? On the half-unit grid,
+    /// "directly on top" = higher layer with footprint overlap (straddle).
     fn is_on_top(&self, a: usize, b: usize) -> bool {
         let ka = self.layout.keys[a];
         let kb = self.layout.keys[b];
-        ka.x == kb.x && ka.y == kb.y && kb.z == ka.z + 1
+        kb.z > ka.z
+            && kb.x < ka.x + TILE_W
+            && ka.x < kb.x + TILE_W
+            && kb.y < ka.y + TILE_H
+            && ka.y < kb.y + TILE_H
     }
 
     /// Free ignoring ONE partner tile (pairs vanish simultaneously, so the
@@ -122,10 +157,24 @@ impl Board {
             return false;
         }
         let key = self.layout.keys[idx];
-        let up = upper_key(key);
-        let covered = match self.layout.slot_index(up) {
-            Some(u) => u != ignore && self.faces[u] != u8::MAX,
-            None => false,
+        // covered if any present higher-layer tile overlaps (ignoring partner)
+        let covered = {
+            let mut c = false;
+            for (i, k) in self.layout.keys.iter().enumerate() {
+                if k.z <= key.z || i == ignore {
+                    continue;
+                }
+                if k.x < key.x + TILE_W
+                    && key.x < k.x + TILE_W
+                    && k.y < key.y + TILE_H
+                    && key.y < k.y + TILE_H
+                    && self.faces[i] != u8::MAX
+                {
+                    c = true;
+                    break;
+                }
+            }
+            c
         };
         if covered {
             return false;
@@ -135,16 +184,26 @@ impl Board {
 
     /// Horizontal blocking treating `ignore`'s cells as empty.
     fn layer_blocked_modulo(&self, key: SlotKey, ignore: usize) -> bool {
-        let left_occ = self.cell_present_modulo(key.x - 1, key.y, key.z, ignore);
-        let right_occ = self.cell_present_modulo(key.x + TILE_W, key.y, key.z, ignore);
-        left_occ && right_occ
-    }
-
-    fn cell_present_modulo(&self, x: i32, y: i32, z: u8, ignore: usize) -> bool {
-        match self.layout.slot_index(SlotKey::new(x, y, z)) {
-            Some(i) => i != ignore && self.faces[i] != u8::MAX,
-            None => false,
+        let z = key.z;
+        let y0 = key.y;
+        let y1 = key.y + TILE_H - 1;
+        let mut left = false;
+        let mut right = false;
+        for (i, k) in self.layout.keys.iter().enumerate() {
+            if k.z != z || i == ignore || self.faces[i] == u8::MAX {
+                continue;
+            }
+            if k.y + TILE_H <= y0 || y1 + 1 <= k.y {
+                continue;
+            }
+            if k.x + TILE_W == key.x {
+                left = true;
+            }
+            if key.x + TILE_W == k.x {
+                right = true;
+            }
         }
+        left && right
     }
 
     /// Shared legality check for a candidate pair (used by find_matches

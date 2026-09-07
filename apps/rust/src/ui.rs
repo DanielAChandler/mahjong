@@ -235,9 +235,9 @@ fn render_board() {
             }
             tile.set_attribute("data-idx", &i.to_string()).unwrap();
             tile.set_attribute("data-face-id", FACE_IDS[face as usize]).unwrap();
-            // position: edge-to-edge portrait grid (x*54, y*70) + small z lift
-            let px = key.x as f64 * 54.0 + key.z as f64 * 6.0 + half_pad;
-            let py = key.y as f64 * 70.0 + (max_z as f64 - key.z as f64) * 9.0 + half_pad;
+            // position: half-unit grid — straddling layers offset half a tile
+            let px = (key.x as f64 / 2.0) * 54.0 + key.z as f64 * 6.0 + half_pad;
+            let py = (key.y as f64 / 2.0) * 75.0 + key.z as f64 * 9.0 + half_pad;
             let zidx = key.z as i32 * 1000 + key.y as i32 * 32 + key.x as i32;
             tile.set_attribute(
                 "style",
@@ -265,13 +265,15 @@ fn render_board() {
             inner.append_child(&tile).unwrap();
         }
 
-        // fit board to viewport (mirrors TS renderer.fitToViewport)
-        let max_x = board.layout.keys.iter().map(|k| k.x).max().unwrap_or(8);
-        let max_y = board.layout.keys.iter().map(|k| k.y).max().unwrap_or(7);
-        let z_spread = max_z as f64 * 6.0;
-        // content box = content extent + uniform pad (centered via half_pad above)
-        let bw = max_x as f64 * 54.0 + 54.0 + z_spread + 24.0;
-        let bh = max_y as f64 * 70.0 + 70.0 + 9.0 * (max_z as f64 + 1.0) + 24.0;
+        // fit board to viewport: content extent from half-unit footprints
+        let mut bw = 0.0_f64;
+        let mut bh = 0.0_f64;
+        for k in board.layout.keys.iter() {
+            bw = bw.max((k.x as f64 / 2.0) * 54.0 + 54.0 + k.z as f64 * 6.0);
+            bh = bh.max((k.y as f64 / 2.0) * 75.0 + 75.0 + k.z as f64 * 9.0);
+        }
+        let bw = bw + 24.0;
+        let bh = bh + 24.0;
         inner.set_attribute(
             "style",
             &format!("width:{}px;height:{}px;transform-origin:center center;", bw, bh),

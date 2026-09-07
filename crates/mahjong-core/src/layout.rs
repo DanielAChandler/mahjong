@@ -5,21 +5,22 @@
 //!   first non-space chars are `---`. First block = layer 1 (z=1), next = z2…
 //! - Within a block, each line is a grid row; ONE CHARACTER = ONE TILE.
 //!   `.` or space = empty; any digit = a tile slot on the CURRENT layer.
-//! - Rows/cols are shared across blocks: align layers with leading dots —
-//!   an upper tile must sit exactly over a lower tile (same column+row).
-//! - Tile coords: x = col, y = row (1 char = 1 tile unit). The layout is
-//!   normalized so min x/y are 0.
+//! - `# offset: OX OY` (optional, anywhere in a block) places the block's
+//!   tiles at HALF-UNIT grid coords (col*2 + OX, row*2 + OY). Layers use
+//!   half-tile offsets so upper tiles STRADDLE two tiles below (Vita-style):
+//!   L0 offset 0 0, L1 offset 1 1, L2 offset 2 1.
+//! - Tile footprint = 2×2 half-units (TILE_W × TILE_H).
 //!
-//! With whole-tile coordinates, layers overlap exactly (half-tile offsets
-//! are not expressible), so blocking/support use exact (x,y,z) matches.
+//! With half-unit coordinates, layers overlap by half a tile; support,
+//! coverage and side-blocking are footprint-overlap based (see board.rs).
 
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 
-/// Tile width in grid units (DSL: one char per tile, so 1).
-pub const TILE_W: i32 = 1;
-/// Tile height in grid units.
-pub const TILE_H: i32 = 1;
+/// Tile width in half-unit grid coords.
+pub const TILE_W: i32 = 2;
+/// Tile height in half-unit grid coords.
+pub const TILE_H: i32 = 2;
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct TileSlot {
@@ -84,6 +85,9 @@ pub fn parse_layout_text(id: &str, name: &str, text: &str) -> Result<Layout, Str
     let mut z: u8 = 1;
     let mut row: i32 = 0;
     let mut any = false;
+    // half-unit offset for the current block (col*2 + ox, row*2 + oy)
+    let mut ox: i32 = 0;
+    let mut oy: i32 = 0;
 
     for (lineno, line) in text.lines().enumerate() {
         if is_layer_separator(line) {
@@ -92,6 +96,29 @@ pub fn parse_layout_text(id: &str, name: &str, text: &str) -> Result<Layout, Str
                 return Err(format!("layout {id}: more than 9 layers"));
             }
             row = 0;
+            ox = 0;
+            oy = 0;
+            continue;
+        }
+        let trimmed = line.trim_start();
+        if let Some(rest) = trimmed.strip_prefix("#") {
+            // directive line: `# offset: OX OY`
+            let t = rest.trim();
+            if let Some(v) = t.strip_prefix("offset:") {
+                let nums: Vec<&str> = v.split_whitespace().collect();
+                if nums.len() != 2 {
+                    return Err(format!(
+                        "layout {id}: # offset expects two ints at line {}",
+                        lineno + 1
+                    ));
+                }
+                ox = nums[0].parse::<i32>().map_err(|_| {
+                    format!("layout {id}: bad offset x at line {}", lineno + 1)
+                })?;
+                oy = nums[1].parse::<i32>().map_err(|_| {
+                    format!("layout {id}: bad offset y at line {}", lineno + 1)
+                })?;
+            }
             continue;
         }
         let mut has_any_char = false;
@@ -115,7 +142,10 @@ pub fn parse_layout_text(id: &str, name: &str, text: &str) -> Result<Layout, Str
                 }
                 c if c.is_ascii_digit() => {
                     any = true;
-                    layers.entry(z).or_default().set(col as i32, row, z);
+                    layers
+                        .entry(z)
+                        .or_default()
+                        .set(col as i32 * 2 + ox, row * 2 + oy, z);
                 }
                 c => {
                     return Err(format!(
@@ -161,41 +191,61 @@ pub fn parse_layout_text(id: &str, name: &str, text: &str) -> Result<Layout, Str
     })
 }
 
-/// Validate geometric soundness: every z>=2 slot must sit exactly over a
-/// slot on the layer below (same x,y — the DSL only expresses full offsets).
+/// Validate geometric soundness (half-unit grid): every z>=2 slot's footprint
+/// must be fully supported — for each 2×2 half-cell of its footprint, at
+/// least one tile on the layer below overlaps that half-cell. This is the
+/// Vita straddle rule: an upper tile rests ON tiles beneath it, never floats.
 pub fn validate_support(layout: &Layout) -> Result<(), String> {
-    use std::collections::HashSet;
-    let mut by_layer: BTreeMap<u8, HashSet<(i32, i32)>> = BTreeMap::new();
+    // Collect lower-layer footprints as half-cell occupancy.
+    let mut below_cells: std::collections::HashSet<(i32, i32)> = std::collections::HashSet::new();
+    let mut max_z_seen: u8 = 1;
     for s in &layout.slots {
-        by_layer.entry(s.z).or_default().insert((s.x, s.y));
+        max_z_seen = max_z_seen.max(s.z);
+        if s.z >= 2 {
+            continue;
+        }
+        for dx in 0..TILE_W {
+            for dy in 0..TILE_H {
+                below_cells.insert((s.x + dx, s.y + dy));
+            }
+        }
     }
     for s in &layout.slots {
         if s.z <= 1 {
             continue;
         }
-        let below = by_layer.get(&(s.z - 1)).ok_or_else(|| {
-            format!("layout {}: slot z{} has no layer below", layout.id, s.z)
-        })?;
-        if !below.contains(&(s.x, s.y)) {
-            return Err(format!(
-                "layout {}: slot ({},{},{}) floats (no support below)",
-                layout.id, s.x, s.y, s.z
-            ));
+        for dx in 0..TILE_W {
+            for dy in 0..TILE_H {
+                if !below_cells.contains(&(s.x + dx, s.y + dy)) {
+                    return Err(format!(
+                        "layout {}: slot ({},{},{}) floats (footprint half-cell unsupported)",
+                        layout.id, s.x, s.y, s.z
+                    ));
+                }
+            }
         }
     }
+    let _ = max_z_seen;
     Ok(())
 }
 
-/// Slot directly above: with the text-DSL's even grid coords, layers can
-/// only overlap exactly (tiles are 2×2; half-tile offsets are not
-/// expressible), so blocking/support is exact-footprint.
+/// The half-cell directly covered by a slot: a tile is blocked from above if
+/// ANY higher-layer tile's footprint overlaps its footprint center region.
+/// We approximate with footprint-corner overlap via `covered_by` in board.rs;
+/// this key remains for stack relations (tiles sharing x,y on z+1).
 pub fn upper_key(key: SlotKey) -> SlotKey {
     SlotKey::new(key.x, key.y, key.z + 1)
 }
 
-/// The grid cell covered by a slot's footprint (1 char = 1 tile = 1 cell).
+/// The tile-grid (half-unit) cells covered by a slot's 2×2 footprint.
 pub fn footprint(key: SlotKey) -> Vec<(i32, i32)> {
-    vec![(key.x, key.y)]
+    let mut v = Vec::with_capacity((TILE_W * TILE_H) as usize);
+    for dx in 0..TILE_W {
+        for dy in 0..TILE_H {
+            v.push((key.x + dx, key.y + dy));
+        }
+    }
+    v
 }
 
 /// Compiled layout: sorted slot list + lookup index + occupancy grids.
@@ -344,52 +394,58 @@ mod tests {
 
     #[test]
     fn free_and_blocked() {
-        // Board-level freedom on the trapezoid: top-row tiles are free;
-        // a tile directly under a top-row tile is covered (not free).
+        // Half-unit geometry: same-layer rows never overlap (edge-to-edge).
+        // Coverage comes from an upper layer straddling lower tiles:
+        //   L0: 1111 / 1111   L1 (offset 1 1): .11.  -> straddles the seam
         use crate::board::Board;
-        let l = parse_layout_text("t", "T", TRAPEZOID).unwrap();
+        let text = "1111\n1111\n---\n# offset: 1 1\n.11.\n";
+        let l = parse_layout_text("t", "T", text).unwrap();
+        validate_support(&l).unwrap();
         let cl = std::sync::Arc::new(CompiledLayout::compile(l).unwrap());
         let n = cl.len();
         let b = Board::new(cl, vec![0; n]);
-        // top row y=0: free
-        let top: Vec<usize> = (0..n).filter(|&i| b.layout.keys[i].y == 0).collect();
-        assert!(!top.is_empty());
+        assert_eq!(n, 8 + 2);
+
+        // the two L1 tiles are free (nothing above them)
+        let top: Vec<usize> = (0..n).filter(|&i| b.layout.keys[i].z == 2).collect();
+        assert_eq!(top.len(), 2);
         for i in top {
-            assert!(b.is_free(i), "top tile {:?} should be free", b.layout.keys[i]);
+            assert!(b.is_free(i), "top tile should be free");
         }
-        // tiles in row 1 that sit directly under a top-row tile are covered
-        let top_xs: std::collections::HashSet<i32> =
-            (0..n).filter(|&i| b.layout.keys[i].y == 0).map(|i| b.layout.keys[i].x).collect();
-        let under_top: Vec<usize> = (0..n)
-            .filter(|&i| {
-                let k = b.layout.keys[i];
-                k.y == 1 && top_xs.contains(&k.x)
-            })
+        // the six L0 tiles straddled by the top layer are covered
+        let covered: Vec<usize> = (0..n)
+            .filter(|&i| b.layout.keys[i].z == 1 && b.covered_above_pub(i))
             .collect();
-        assert!(!under_top.is_empty());
-        for i in under_top {
-            assert!(
-                !b.is_free(i),
-                "covered tile {:?} should not be free",
-                b.layout.keys[i]
-            );
+        assert_eq!(covered.len(), 6, "straddled L0 tiles must be covered");
+        for i in covered {
+            assert!(!b.is_free(i));
         }
-        // and a row-1 tile sticking out beyond the top row is NOT covered
-        // (it may still be side-blocked, so only sanity-check the flip side:
-        // it must not be blocked from above)
-        let outcrops: Vec<usize> = (0..n)
-            .filter(|&i| {
-                let k = b.layout.keys[i];
-                k.y == 1 && !top_xs.contains(&k.x)
-            })
+        // the two rightmost L0 tiles are not straddled
+        let uncovered: Vec<usize> = (0..n)
+            .filter(|&i| b.layout.keys[i].z == 1 && !b.covered_above_pub(i))
             .collect();
-        assert!(!outcrops.is_empty());
-        for i in outcrops {
-            let k = b.layout.keys[i];
+        assert_eq!(uncovered.len(), 2);
+        for i in uncovered {
             assert!(
                 !b.covered_above_pub(i),
-                "uncovered tile {k:?} has no tile above"
+                "edge tile has nothing above it"
             );
         }
+    }
+
+    #[test]
+    fn same_layer_rows_never_cover() {
+        // rows within one layer are 2 half-units apart = exactly tile height
+        use crate::board::Board;
+        let l = parse_layout_text("t", "T", "1111\n1111\n").unwrap();
+        let cl = std::sync::Arc::new(CompiledLayout::compile(l).unwrap());
+        let mut b = Board::new(cl, vec![0; 8]);
+        for i in 0..8 {
+            assert!(!b.covered_above_pub(i));
+        }
+        // in a full row of 8, only the ends are free (sandwich rule)
+        assert!(b.is_free(0) && b.is_free(7));
+        assert!(!b.is_free(3) && !b.is_free(4));
+        let _ = &mut b;
     }
 }

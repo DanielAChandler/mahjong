@@ -124,7 +124,14 @@ export class Game {
   private async onTile(idx: number) {
     const st = await api.state(this.puzzle.layout_id, u8(this.faces));
     if (this.selected === null) {
-      if (!st.free.includes(idx)) return;
+      // selectable = free, OR covered but part of a legal pair with a free
+      // tile (stacked-pair case: the top is free, the bottom is playable-under)
+      if (!st.free.includes(idx)) {
+        const playableUnder = (st.moves as [number, number][]).some(
+          ([a, b]) => a === idx || b === idx,
+        );
+        if (!playableUnder) return;
+      }
       this.selected = idx;
       this.renderer.markSelected(idx);
       this.sound && sfx.select();
@@ -154,6 +161,11 @@ export class Game {
       }
     }
     await this.refresh();
+  }
+
+  /** Test/e2e hook: current engine state incl. a legal hint pair. */
+  async apiState() {
+    return api.state(this.puzzle.layout_id, u8(this.faces));
   }
 
   async useHint() {

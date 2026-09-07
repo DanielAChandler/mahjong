@@ -68,6 +68,8 @@ async function boot() {
     onToast: toast,
     onHud: updateHud,
   }, save.settings.sound);
+  // e2e/test hook: lets WebKit tests drive the real engine (hint = legal pair)
+  (window as any).__game = game;
 
   bindUI();
   applyTheme();

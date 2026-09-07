@@ -4,7 +4,7 @@
   --text: #e8ecf4;
   --accent: #e8b04b;
   --tw: 54px;
-  --th: 70px;
+  --th: 75px;
   font-family: "Inter", "Segoe UI", system-ui, sans-serif;
 }
 
@@ -82,7 +82,7 @@ html, body {
 }
 
 .tile-face {
-  position: absolute; inset: 0 4px 4px 0;
+  position: absolute; inset: 0 6px 6px 0;
   border-radius: 7px;
   display: flex; align-items: center; justify-content: center;
   /* plain ivory face — the 3D tile-side supplies the edge (no thick ring) */
@@ -90,7 +90,7 @@ html, body {
   overflow: hidden;
 }
 .tile-side {
-  position: absolute; inset: 4px 0 0 4px;
+  position: absolute; inset: 6px 0 0 6px;
   background: linear-gradient(180deg, var(--tile-side, #2a6b41), color-mix(in srgb, var(--tile-side, #2a6b41) 70%, #000));
   border-radius: 7px;
 }
