@@ -10,6 +10,26 @@ import { sfx } from "./sound.js";
 
 const $ = <T extends HTMLElement>(sel: string): T => document.querySelector(sel)!;
 
+// iOS < 15.4 has no <dialog>; emulate open/close + backdrop minimally.
+function supportsDialog(): boolean {
+  return (
+    typeof HTMLDialogElement !== "undefined" &&
+    typeof HTMLDialogElement.prototype.showModal === "function"
+  );
+}
+function openDialog(dlg: HTMLElement) {
+  if (supportsDialog()) {
+    (dlg as HTMLDialogElement).showModal();
+  } else {
+    dlg.setAttribute("open", "");
+    dlg.classList.add("polyfill-open");
+  }
+}
+function closeDialog(dlg: HTMLElement) {
+  if (supportsDialog()) (dlg as HTMLDialogElement).close();
+  else dlg.removeAttribute("open");
+}
+
 let save = persist.load();
 let game: Game | null = null;
 let renderer: Renderer;
@@ -21,7 +41,8 @@ async function boot() {
   console.info("mahjong core", api.mahjong_version());
 
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/sw.js").catch(() => {});
+    // relative registration → correct scope under the /mahjong/ Pages subpath
+    navigator.serviceWorker.register("./sw.js").catch(() => {});
   }
 
   renderer = new Renderer($("#board"), themeById(save.settings.theme));
@@ -81,7 +102,10 @@ function updatePowerups() {
   $("#hud-level").textContent = modeLabel(currentMode);
 }
 
+let lastHud = { pairs: 0, free: 0 };
+
 function updateHud(h: { pairs: number; free: number }) {
+  lastHud = h;
   $("#hud-pairs").textContent = `${h.pairs} pairs`;
   const t = game?.elapsed() ?? 0;
   $("#hud-timer").textContent = `${Math.floor(t / 60)}:${String(t % 60).padStart(2, "0")}`;
@@ -105,7 +129,7 @@ async function onWin(seconds: number) {
   updatePowerups();
   const dlg = $("#win-dialog") as HTMLDialogElement;
   $("#win-stats").textContent = `Cleared in ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")} — +${persist.REWARDS.win} coins (streak ${save.stats.currentStreak})`;
-  dlg.showModal();
+  openDialog(dlg);
 }
 
 function toast(msg: string) {
@@ -153,7 +177,7 @@ function openMenu() {
       <button data-act="reset">Reset everything</button>
     </section>
     <button data-act="close">Close</button>`;
-  dlg.showModal();
+  openDialog(dlg);
 
   dlg.onclick = (e) => {
     const el = (e.target as HTMLElement).closest("button");
@@ -174,13 +198,13 @@ function openMenu() {
     switch (el.dataset.act) {
       case "next":
         currentMode = { kind: "campaign", level: nextLevel() };
-        dlg.close();
+        closeDialog(dlg);
         game!.start(currentMode);
         updatePowerups();
         break;
       case "daily":
         currentMode = { kind: "daily" };
-        dlg.close();
+        closeDialog(dlg);
         game!.start(currentMode);
         updatePowerups();
         break;
@@ -189,7 +213,7 @@ function openMenu() {
         const lay = (dlg.querySelector("#sel-layout") as HTMLSelectElement).value;
         if (v > 0) {
           currentMode = { kind: "infinite", id: v, layoutId: lay };
-          dlg.close();
+          closeDialog(dlg);
           game!.start(currentMode);
           updatePowerups();
         }
@@ -216,7 +240,7 @@ function openMenu() {
             applyTheme();
             updatePowerups();
             toast("Progress imported ✓");
-            dlg.close();
+            closeDialog(dlg);
           } catch {
             toast("Invalid save file");
           }
@@ -230,10 +254,10 @@ function openMenu() {
         applyTheme();
         updatePowerups();
         toast("Progress reset");
-        dlg.close();
+        closeDialog(dlg);
         break;
       case "close":
-        dlg.close();
+        closeDialog(dlg);
         break;
     }
   };
@@ -244,9 +268,9 @@ function nextLevel(): number {
   return Math.min(300, (done % 300) + 1);
 }
 
-// timer repaint
+// timer repaint (keeps last known pair count)
 setInterval(() => {
-  if (game) updateHud({ pairs: 0, free: 0 });
+  if (game) updateHud(lastHud);
 }, 1000);
 
 boot();

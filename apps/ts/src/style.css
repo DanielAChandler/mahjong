@@ -3,6 +3,8 @@
   --panel: #1b2230;
   --text: #e8ecf4;
   --accent: #e8b04b;
+  --tw: 56px;
+  --th: 72px;
   font-family: "Inter", "Segoe UI", system-ui, sans-serif;
 }
 
@@ -16,7 +18,7 @@ html, body {
   overscroll-behavior: none;
 }
 
-#app { display: flex; flex-direction: column; height: 100dvh; }
+#app { display: flex; flex-direction: column; height: 100vh; height: 100dvh; }
 
 #topbar {
   display: flex;
@@ -60,12 +62,13 @@ html, body {
   background: radial-gradient(ellipse at center, #1d4d3a 0%, #0e2f23 75%);
 }
 
-.board-inner { position: relative; }
+.board-inner { position: relative; transform-origin: center center; }
 
 .tile {
   position: absolute;
   width: var(--tw); height: var(--th);
   cursor: pointer;
+  touch-action: manipulation;
   transition: transform 0.12s ease, filter 0.15s ease;
   will-change: transform;
 }
@@ -116,6 +119,20 @@ dialog button.active, dialog button:hover { border-color: var(--accent); }
 dialog input, dialog select {
   background: #121826; color: var(--text);
   border: 1px solid #39465e; border-radius: 8px; padding: 8px;
+}
+
+dialog.polyfill-open {
+  position: fixed; inset: 0;
+  margin: auto;
+  width: fit-content; height: fit-content;
+  z-index: 50;
+  display: block;
+}
+dialog.polyfill-open::before {
+  content: "";
+  position: fixed; inset: 0;
+  background: rgb(0 0 0 / 0.55);
+  z-index: -1;
 }
 
 @media (max-width: 640px) {

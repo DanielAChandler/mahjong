@@ -84,6 +84,21 @@ export class Renderer {
       this.tiles.set(t.idx, el);
     }
     this.paintBoard();
+    this.fitToViewport();
+  }
+
+  /** Scale the fixed-size board down to fit the viewport (mobile-first). */
+  fitToViewport() {
+    const host = this.boardEl.parentElement; // #board
+    if (!host) return;
+    const availW = host.clientWidth - 8;
+    const availH = host.clientHeight - 8;
+    if (availW <= 0 || availH <= 0) return;
+    const bw = this.boardEl.scrollWidth || parseFloat(this.boardEl.style.width) || 0;
+    const bh = this.boardEl.scrollHeight || parseFloat(this.boardEl.style.height) || 0;
+    if (!bw || !bh) return;
+    const scale = Math.min(1.6, availW / bw, availH / bh);
+    this.boardEl.style.transform = `scale(${scale})`;
   }
 
   positionTile(el: HTMLElement, t: RenderTile) {

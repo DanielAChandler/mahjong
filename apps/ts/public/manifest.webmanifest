@@ -1,7 +1,8 @@
 {
   "name": "Mahjong Solitaire",
   "short_name": "Mahjong",
-  "start_url": "/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#10151c",
   "theme_color": "#1d4d3a",

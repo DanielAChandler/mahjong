@@ -1,6 +1,7 @@
-// Minimal offline cache: app shell + wasm, cache-first.
-const CACHE = "mahjong-v1";
-const ASSETS = ["./"];
+// Offline cache: app shell + assets, cache-first, base-path aware so the
+// GitHub Pages subpath deployment works (scope derives from SW location).
+const CACHE = "mahjong-v2";
+const ASSETS = ["./", "./manifest.webmanifest"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)));
