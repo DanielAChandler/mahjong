@@ -101,13 +101,6 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
     needs: [ts-app, rust-app]
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
-        with:
-          artifact_name: pages-ts
-      - name: Deploy Rust app to /rust subpath preview
-        run: echo "Rust artifact available as pages-rust (see Actions artifacts)"
+      - name: Deployment handled by deploy.yml (single Pages deployer)
+        run: echo "see .github/workflows/deploy.yml"
