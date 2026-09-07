@@ -40,6 +40,9 @@ export class Renderer {
     this.boardEl = document.createElement("div");
     this.boardEl.className = "board-inner";
     root.appendChild(this.boardEl);
+    window.addEventListener("resize", () => this.fitToViewport());
+    window.addEventListener("orientationchange", () => this.fitToViewport());
+    window.visualViewport?.addEventListener("resize", () => this.fitToViewport());
   }
 
   setTheme(theme: ThemeTokens) {
@@ -89,6 +92,12 @@ export class Renderer {
 
   /** Scale the fixed-size board down to fit the viewport (mobile-first). */
   fitToViewport() {
+    // re-run after iOS orientation changes settle
+    clearTimeout((this as any)._fitT);
+    (this as any)._fitT = setTimeout(() => this.applyFit(), 120);
+  }
+
+  private applyFit() {
     const host = this.boardEl.parentElement; // #board
     if (!host) return;
     const availW = host.clientWidth - 8;

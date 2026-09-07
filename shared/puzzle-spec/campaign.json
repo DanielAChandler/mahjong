@@ -14,10 +14,10 @@
     {
       "level": 2,
       "slug": "level-002",
-      "title": "Courtyard 2",
-      "layout_id": "butterfly",
+      "title": "Fortress 2",
+      "layout_id": "blossom",
       "puzzle_id": 1014,
-      "difficulty": 2,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -32,10 +32,10 @@
     {
       "level": 4,
       "slug": "level-004",
-      "title": "Palace 4",
-      "layout_id": "butterfly",
+      "title": "Fortress 4",
+      "layout_id": "blossom",
       "puzzle_id": 1028,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -50,10 +50,10 @@
     {
       "level": 6,
       "slug": "level-006",
-      "title": "Courtyard 6",
-      "layout_id": "butterfly",
+      "title": "Fortress 6",
+      "layout_id": "blossom",
       "puzzle_id": 1042,
-      "difficulty": 2,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -68,10 +68,10 @@
     {
       "level": 8,
       "slug": "level-008",
-      "title": "Palace 8",
-      "layout_id": "butterfly",
+      "title": "Fortress 8",
+      "layout_id": "blossom",
       "puzzle_id": 1056,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -86,10 +86,10 @@
     {
       "level": 10,
       "slug": "level-010",
-      "title": "Courtyard 10",
-      "layout_id": "butterfly",
+      "title": "Fortress 10",
+      "layout_id": "blossom",
       "puzzle_id": 1070,
-      "difficulty": 2,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -104,10 +104,10 @@
     {
       "level": 12,
       "slug": "level-012",
-      "title": "Courtyard 12",
-      "layout_id": "butterfly",
+      "title": "Fortress 12",
+      "layout_id": "blossom",
       "puzzle_id": 1084,
-      "difficulty": 2,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -122,10 +122,10 @@
     {
       "level": 14,
       "slug": "level-014",
-      "title": "Palace 14",
-      "layout_id": "butterfly",
+      "title": "Fortress 14",
+      "layout_id": "blossom",
       "puzzle_id": 1098,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -140,10 +140,10 @@
     {
       "level": 16,
       "slug": "level-016",
-      "title": "Palace 16",
-      "layout_id": "butterfly",
+      "title": "Fortress 16",
+      "layout_id": "blossom",
       "puzzle_id": 1112,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -158,10 +158,10 @@
     {
       "level": 18,
       "slug": "level-018",
-      "title": "Courtyard 18",
-      "layout_id": "butterfly",
+      "title": "Fortress 18",
+      "layout_id": "blossom",
       "puzzle_id": 1126,
-      "difficulty": 2,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -176,10 +176,10 @@
     {
       "level": 20,
       "slug": "level-020",
-      "title": "Courtyard 20",
-      "layout_id": "butterfly",
+      "title": "Fortress 20",
+      "layout_id": "blossom",
       "puzzle_id": 1140,
-      "difficulty": 2,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -194,10 +194,10 @@
     {
       "level": 22,
       "slug": "level-022",
-      "title": "Courtyard 22",
-      "layout_id": "butterfly",
+      "title": "Fortress 22",
+      "layout_id": "blossom",
       "puzzle_id": 1154,
-      "difficulty": 2,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -212,10 +212,10 @@
     {
       "level": 24,
       "slug": "level-024",
-      "title": "Palace 24",
-      "layout_id": "butterfly",
+      "title": "Fortress 24",
+      "layout_id": "blossom",
       "puzzle_id": 1168,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -230,10 +230,10 @@
     {
       "level": 26,
       "slug": "level-026",
-      "title": "Palace 26",
-      "layout_id": "butterfly",
+      "title": "Fortress 26",
+      "layout_id": "blossom",
       "puzzle_id": 1182,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -248,10 +248,10 @@
     {
       "level": 28,
       "slug": "level-028",
-      "title": "Palace 28",
-      "layout_id": "butterfly",
+      "title": "Fortress 28",
+      "layout_id": "blossom",
       "puzzle_id": 1196,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -266,17 +266,17 @@
     {
       "level": 30,
       "slug": "level-030",
-      "title": "Palace 30",
-      "layout_id": "butterfly",
+      "title": "Fortress 30",
+      "layout_id": "blossom",
       "puzzle_id": 1210,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
       "level": 31,
       "slug": "level-031",
       "title": "Fortress 31",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1217,
       "difficulty": 4,
       "note": ""
@@ -284,10 +284,10 @@
     {
       "level": 32,
       "slug": "level-032",
-      "title": "Palace 32",
-      "layout_id": "butterfly",
+      "title": "Fortress 32",
+      "layout_id": "blossom",
       "puzzle_id": 1224,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -303,7 +303,7 @@
       "level": 34,
       "slug": "level-034",
       "title": "Palace 34",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 1238,
       "difficulty": 3,
       "note": ""
@@ -312,7 +312,7 @@
       "level": 35,
       "slug": "level-035",
       "title": "Fortress 35",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1245,
       "difficulty": 4,
       "note": ""
@@ -320,10 +320,10 @@
     {
       "level": 36,
       "slug": "level-036",
-      "title": "Palace 36",
-      "layout_id": "butterfly",
+      "title": "Fortress 36",
+      "layout_id": "blossom",
       "puzzle_id": 1252,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -339,7 +339,7 @@
       "level": 38,
       "slug": "level-038",
       "title": "Palace 38",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 1266,
       "difficulty": 3,
       "note": ""
@@ -348,7 +348,7 @@
       "level": 39,
       "slug": "level-039",
       "title": "Fortress 39",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1273,
       "difficulty": 4,
       "note": ""
@@ -356,10 +356,10 @@
     {
       "level": 40,
       "slug": "level-040",
-      "title": "Courtyard 40",
-      "layout_id": "butterfly",
+      "title": "Fortress 40",
+      "layout_id": "blossom",
       "puzzle_id": 1280,
-      "difficulty": 2,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -375,7 +375,7 @@
       "level": 42,
       "slug": "level-042",
       "title": "Palace 42",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 1294,
       "difficulty": 3,
       "note": ""
@@ -384,7 +384,7 @@
       "level": 43,
       "slug": "level-043",
       "title": "Fortress 43",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1301,
       "difficulty": 4,
       "note": ""
@@ -392,10 +392,10 @@
     {
       "level": 44,
       "slug": "level-044",
-      "title": "Palace 44",
-      "layout_id": "butterfly",
+      "title": "Fortress 44",
+      "layout_id": "blossom",
       "puzzle_id": 1308,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -411,7 +411,7 @@
       "level": 46,
       "slug": "level-046",
       "title": "Palace 46",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 1322,
       "difficulty": 3,
       "note": ""
@@ -420,7 +420,7 @@
       "level": 47,
       "slug": "level-047",
       "title": "Fortress 47",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1329,
       "difficulty": 4,
       "note": ""
@@ -428,10 +428,10 @@
     {
       "level": 48,
       "slug": "level-048",
-      "title": "Courtyard 48",
-      "layout_id": "butterfly",
+      "title": "Fortress 48",
+      "layout_id": "blossom",
       "puzzle_id": 1336,
-      "difficulty": 2,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -447,7 +447,7 @@
       "level": 50,
       "slug": "level-050",
       "title": "Palace 50",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 1350,
       "difficulty": 3,
       "note": ""
@@ -456,7 +456,7 @@
       "level": 51,
       "slug": "level-051",
       "title": "Fortress 51",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1357,
       "difficulty": 4,
       "note": ""
@@ -464,10 +464,10 @@
     {
       "level": 52,
       "slug": "level-052",
-      "title": "Palace 52",
-      "layout_id": "butterfly",
+      "title": "Fortress 52",
+      "layout_id": "blossom",
       "puzzle_id": 1364,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -482,17 +482,17 @@
     {
       "level": 54,
       "slug": "level-054",
-      "title": "Palace 54",
-      "layout_id": "dragon",
+      "title": "Courtyard 54",
+      "layout_id": "butterfly",
       "puzzle_id": 1378,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 55,
       "slug": "level-055",
       "title": "Fortress 55",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1385,
       "difficulty": 4,
       "note": ""
@@ -500,10 +500,10 @@
     {
       "level": 56,
       "slug": "level-056",
-      "title": "Palace 56",
-      "layout_id": "butterfly",
+      "title": "Fortress 56",
+      "layout_id": "blossom",
       "puzzle_id": 1392,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -519,7 +519,7 @@
       "level": 58,
       "slug": "level-058",
       "title": "Palace 58",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 1406,
       "difficulty": 3,
       "note": ""
@@ -528,7 +528,7 @@
       "level": 59,
       "slug": "level-059",
       "title": "Fortress 59",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1413,
       "difficulty": 4,
       "note": ""
@@ -536,10 +536,10 @@
     {
       "level": 60,
       "slug": "level-060",
-      "title": "Courtyard 60",
-      "layout_id": "butterfly",
+      "title": "Fortress 60",
+      "layout_id": "blossom",
       "puzzle_id": 1420,
-      "difficulty": 2,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -555,7 +555,7 @@
       "level": 62,
       "slug": "level-062",
       "title": "Palace 62",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 1434,
       "difficulty": 3,
       "note": ""
@@ -564,7 +564,7 @@
       "level": 63,
       "slug": "level-063",
       "title": "Fortress 63",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1441,
       "difficulty": 4,
       "note": ""
@@ -572,10 +572,10 @@
     {
       "level": 64,
       "slug": "level-064",
-      "title": "Palace 64",
-      "layout_id": "butterfly",
+      "title": "Fortress 64",
+      "layout_id": "blossom",
       "puzzle_id": 1448,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -590,17 +590,17 @@
     {
       "level": 66,
       "slug": "level-066",
-      "title": "Palace 66",
-      "layout_id": "dragon",
+      "title": "Courtyard 66",
+      "layout_id": "butterfly",
       "puzzle_id": 1462,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 67,
       "slug": "level-067",
       "title": "Fortress 67",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1469,
       "difficulty": 4,
       "note": ""
@@ -608,10 +608,10 @@
     {
       "level": 68,
       "slug": "level-068",
-      "title": "Palace 68",
-      "layout_id": "butterfly",
+      "title": "Fortress 68",
+      "layout_id": "blossom",
       "puzzle_id": 1476,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -627,7 +627,7 @@
       "level": 70,
       "slug": "level-070",
       "title": "Palace 70",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 1490,
       "difficulty": 3,
       "note": ""
@@ -636,7 +636,7 @@
       "level": 71,
       "slug": "level-071",
       "title": "Fortress 71",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1497,
       "difficulty": 4,
       "note": ""
@@ -644,10 +644,10 @@
     {
       "level": 72,
       "slug": "level-072",
-      "title": "Palace 72",
-      "layout_id": "butterfly",
+      "title": "Fortress 72",
+      "layout_id": "blossom",
       "puzzle_id": 1504,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -663,7 +663,7 @@
       "level": 74,
       "slug": "level-074",
       "title": "Palace 74",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 1518,
       "difficulty": 3,
       "note": ""
@@ -672,7 +672,7 @@
       "level": 75,
       "slug": "level-075",
       "title": "Fortress 75",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1525,
       "difficulty": 4,
       "note": ""
@@ -680,10 +680,10 @@
     {
       "level": 76,
       "slug": "level-076",
-      "title": "Courtyard 76",
-      "layout_id": "butterfly",
+      "title": "Fortress 76",
+      "layout_id": "blossom",
       "puzzle_id": 1532,
-      "difficulty": 2,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -699,7 +699,7 @@
       "level": 78,
       "slug": "level-078",
       "title": "Palace 78",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 1546,
       "difficulty": 3,
       "note": ""
@@ -708,7 +708,7 @@
       "level": 79,
       "slug": "level-079",
       "title": "Fortress 79",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1553,
       "difficulty": 4,
       "note": ""
@@ -716,10 +716,10 @@
     {
       "level": 80,
       "slug": "level-080",
-      "title": "Palace 80",
-      "layout_id": "butterfly",
+      "title": "Fortress 80",
+      "layout_id": "blossom",
       "puzzle_id": 1560,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -734,17 +734,17 @@
     {
       "level": 82,
       "slug": "level-082",
-      "title": "Palace 82",
-      "layout_id": "dragon",
+      "title": "Courtyard 82",
+      "layout_id": "butterfly",
       "puzzle_id": 1574,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 83,
       "slug": "level-083",
       "title": "Fortress 83",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1581,
       "difficulty": 4,
       "note": ""
@@ -752,10 +752,10 @@
     {
       "level": 84,
       "slug": "level-084",
-      "title": "Palace 84",
-      "layout_id": "butterfly",
+      "title": "Fortress 84",
+      "layout_id": "blossom",
       "puzzle_id": 1588,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -771,7 +771,7 @@
       "level": 86,
       "slug": "level-086",
       "title": "Palace 86",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 1602,
       "difficulty": 3,
       "note": ""
@@ -780,7 +780,7 @@
       "level": 87,
       "slug": "level-087",
       "title": "Fortress 87",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1609,
       "difficulty": 4,
       "note": ""
@@ -788,10 +788,10 @@
     {
       "level": 88,
       "slug": "level-088",
-      "title": "Palace 88",
-      "layout_id": "butterfly",
+      "title": "Fortress 88",
+      "layout_id": "blossom",
       "puzzle_id": 1616,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -806,17 +806,17 @@
     {
       "level": 90,
       "slug": "level-090",
-      "title": "Palace 90",
-      "layout_id": "dragon",
+      "title": "Courtyard 90",
+      "layout_id": "butterfly",
       "puzzle_id": 1630,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 91,
       "slug": "level-091",
       "title": "Fortress 91",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1637,
       "difficulty": 4,
       "note": ""
@@ -824,10 +824,10 @@
     {
       "level": 92,
       "slug": "level-092",
-      "title": "Courtyard 92",
-      "layout_id": "butterfly",
+      "title": "Fortress 92",
+      "layout_id": "blossom",
       "puzzle_id": 1644,
-      "difficulty": 2,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -843,7 +843,7 @@
       "level": 94,
       "slug": "level-094",
       "title": "Palace 94",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 1658,
       "difficulty": 3,
       "note": ""
@@ -852,7 +852,7 @@
       "level": 95,
       "slug": "level-095",
       "title": "Fortress 95",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1665,
       "difficulty": 4,
       "note": ""
@@ -860,10 +860,10 @@
     {
       "level": 96,
       "slug": "level-096",
-      "title": "Courtyard 96",
-      "layout_id": "butterfly",
+      "title": "Fortress 96",
+      "layout_id": "blossom",
       "puzzle_id": 1672,
-      "difficulty": 2,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -878,17 +878,17 @@
     {
       "level": 98,
       "slug": "level-098",
-      "title": "Palace 98",
-      "layout_id": "dragon",
+      "title": "Courtyard 98",
+      "layout_id": "butterfly",
       "puzzle_id": 1686,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 99,
       "slug": "level-099",
       "title": "Fortress 99",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1693,
       "difficulty": 4,
       "note": ""
@@ -896,17 +896,17 @@
     {
       "level": 100,
       "slug": "level-100",
-      "title": "Palace 100",
-      "layout_id": "butterfly",
+      "title": "Fortress 100",
+      "layout_id": "blossom",
       "puzzle_id": 1700,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
       "level": 101,
       "slug": "level-101",
       "title": "Fortress 101",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1707,
       "difficulty": 4,
       "note": ""
@@ -915,7 +915,7 @@
       "level": 102,
       "slug": "level-102",
       "title": "Palace 102",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 1714,
       "difficulty": 3,
       "note": ""
@@ -924,7 +924,7 @@
       "level": 103,
       "slug": "level-103",
       "title": "Fortress 103",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1721,
       "difficulty": 4,
       "note": ""
@@ -933,7 +933,7 @@
       "level": 104,
       "slug": "level-104",
       "title": "Palace 104",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 1728,
       "difficulty": 3,
       "note": ""
@@ -942,7 +942,7 @@
       "level": 105,
       "slug": "level-105",
       "title": "Fortress 105",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1735,
       "difficulty": 4,
       "note": ""
@@ -951,7 +951,7 @@
       "level": 106,
       "slug": "level-106",
       "title": "Palace 106",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 1742,
       "difficulty": 3,
       "note": ""
@@ -960,7 +960,7 @@
       "level": 107,
       "slug": "level-107",
       "title": "Fortress 107",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1749,
       "difficulty": 4,
       "note": ""
@@ -969,7 +969,7 @@
       "level": 108,
       "slug": "level-108",
       "title": "Palace 108",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 1756,
       "difficulty": 3,
       "note": ""
@@ -978,7 +978,7 @@
       "level": 109,
       "slug": "level-109",
       "title": "Fortress 109",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1763,
       "difficulty": 4,
       "note": ""
@@ -986,17 +986,17 @@
     {
       "level": 110,
       "slug": "level-110",
-      "title": "Palace 110",
-      "layout_id": "dragon",
+      "title": "Courtyard 110",
+      "layout_id": "butterfly",
       "puzzle_id": 1770,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 111,
       "slug": "level-111",
       "title": "Fortress 111",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1777,
       "difficulty": 4,
       "note": ""
@@ -1005,7 +1005,7 @@
       "level": 112,
       "slug": "level-112",
       "title": "Palace 112",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 1784,
       "difficulty": 3,
       "note": ""
@@ -1014,7 +1014,7 @@
       "level": 113,
       "slug": "level-113",
       "title": "Fortress 113",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1791,
       "difficulty": 4,
       "note": ""
@@ -1023,7 +1023,7 @@
       "level": 114,
       "slug": "level-114",
       "title": "Palace 114",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 1798,
       "difficulty": 3,
       "note": ""
@@ -1032,7 +1032,7 @@
       "level": 115,
       "slug": "level-115",
       "title": "Fortress 115",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1805,
       "difficulty": 4,
       "note": ""
@@ -1040,17 +1040,17 @@
     {
       "level": 116,
       "slug": "level-116",
-      "title": "Palace 116",
-      "layout_id": "dragon",
+      "title": "Courtyard 116",
+      "layout_id": "butterfly",
       "puzzle_id": 1812,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 117,
       "slug": "level-117",
       "title": "Fortress 117",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1819,
       "difficulty": 4,
       "note": ""
@@ -1059,7 +1059,7 @@
       "level": 118,
       "slug": "level-118",
       "title": "Palace 118",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 1826,
       "difficulty": 3,
       "note": ""
@@ -1068,7 +1068,7 @@
       "level": 119,
       "slug": "level-119",
       "title": "Fortress 119",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1833,
       "difficulty": 4,
       "note": ""
@@ -1076,17 +1076,17 @@
     {
       "level": 120,
       "slug": "level-120",
-      "title": "Palace 120",
-      "layout_id": "dragon",
+      "title": "Courtyard 120",
+      "layout_id": "butterfly",
       "puzzle_id": 1840,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 121,
       "slug": "level-121",
       "title": "Fortress 121",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1847,
       "difficulty": 4,
       "note": ""
@@ -1095,7 +1095,7 @@
       "level": 122,
       "slug": "level-122",
       "title": "Palace 122",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 1854,
       "difficulty": 3,
       "note": ""
@@ -1104,7 +1104,7 @@
       "level": 123,
       "slug": "level-123",
       "title": "Fortress 123",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1861,
       "difficulty": 4,
       "note": ""
@@ -1113,7 +1113,7 @@
       "level": 124,
       "slug": "level-124",
       "title": "Palace 124",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 1868,
       "difficulty": 3,
       "note": ""
@@ -1122,7 +1122,7 @@
       "level": 125,
       "slug": "level-125",
       "title": "Fortress 125",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1875,
       "difficulty": 4,
       "note": ""
@@ -1131,7 +1131,7 @@
       "level": 126,
       "slug": "level-126",
       "title": "Palace 126",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 1882,
       "difficulty": 3,
       "note": ""
@@ -1140,7 +1140,7 @@
       "level": 127,
       "slug": "level-127",
       "title": "Fortress 127",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1889,
       "difficulty": 4,
       "note": ""
@@ -1149,7 +1149,7 @@
       "level": 128,
       "slug": "level-128",
       "title": "Fortress 128",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1896,
       "difficulty": 4,
       "note": ""
@@ -1157,17 +1157,17 @@
     {
       "level": 129,
       "slug": "level-129",
-      "title": "Palace 129",
-      "layout_id": "dragon",
+      "title": "Courtyard 129",
+      "layout_id": "butterfly",
       "puzzle_id": 1903,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 130,
       "slug": "level-130",
       "title": "Fortress 130",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1910,
       "difficulty": 4,
       "note": ""
@@ -1176,7 +1176,7 @@
       "level": 131,
       "slug": "level-131",
       "title": "Palace 131",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 1917,
       "difficulty": 3,
       "note": ""
@@ -1185,7 +1185,7 @@
       "level": 132,
       "slug": "level-132",
       "title": "Fortress 132",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1924,
       "difficulty": 4,
       "note": ""
@@ -1194,7 +1194,7 @@
       "level": 133,
       "slug": "level-133",
       "title": "Palace 133",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 1931,
       "difficulty": 3,
       "note": ""
@@ -1203,7 +1203,7 @@
       "level": 134,
       "slug": "level-134",
       "title": "Fortress 134",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1938,
       "difficulty": 4,
       "note": ""
@@ -1212,7 +1212,7 @@
       "level": 135,
       "slug": "level-135",
       "title": "Palace 135",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 1945,
       "difficulty": 3,
       "note": ""
@@ -1221,7 +1221,7 @@
       "level": 136,
       "slug": "level-136",
       "title": "Fortress 136",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1952,
       "difficulty": 4,
       "note": ""
@@ -1229,17 +1229,17 @@
     {
       "level": 137,
       "slug": "level-137",
-      "title": "Palace 137",
-      "layout_id": "dragon",
+      "title": "Courtyard 137",
+      "layout_id": "butterfly",
       "puzzle_id": 1959,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 138,
       "slug": "level-138",
       "title": "Fortress 138",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1966,
       "difficulty": 4,
       "note": ""
@@ -1248,7 +1248,7 @@
       "level": 139,
       "slug": "level-139",
       "title": "Palace 139",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 1973,
       "difficulty": 3,
       "note": ""
@@ -1257,7 +1257,7 @@
       "level": 140,
       "slug": "level-140",
       "title": "Fortress 140",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1980,
       "difficulty": 4,
       "note": ""
@@ -1266,7 +1266,7 @@
       "level": 141,
       "slug": "level-141",
       "title": "Palace 141",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 1987,
       "difficulty": 3,
       "note": ""
@@ -1275,7 +1275,7 @@
       "level": 142,
       "slug": "level-142",
       "title": "Fortress 142",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 1994,
       "difficulty": 4,
       "note": ""
@@ -1284,7 +1284,7 @@
       "level": 143,
       "slug": "level-143",
       "title": "Palace 143",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 2001,
       "difficulty": 3,
       "note": ""
@@ -1293,7 +1293,7 @@
       "level": 144,
       "slug": "level-144",
       "title": "Fortress 144",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2008,
       "difficulty": 4,
       "note": ""
@@ -1301,17 +1301,17 @@
     {
       "level": 145,
       "slug": "level-145",
-      "title": "Palace 145",
-      "layout_id": "dragon",
+      "title": "Courtyard 145",
+      "layout_id": "butterfly",
       "puzzle_id": 2015,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 146,
       "slug": "level-146",
       "title": "Fortress 146",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2022,
       "difficulty": 4,
       "note": ""
@@ -1320,7 +1320,7 @@
       "level": 147,
       "slug": "level-147",
       "title": "Palace 147",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 2029,
       "difficulty": 3,
       "note": ""
@@ -1329,7 +1329,7 @@
       "level": 148,
       "slug": "level-148",
       "title": "Fortress 148",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2036,
       "difficulty": 4,
       "note": ""
@@ -1337,17 +1337,17 @@
     {
       "level": 149,
       "slug": "level-149",
-      "title": "Palace 149",
-      "layout_id": "dragon",
+      "title": "Courtyard 149",
+      "layout_id": "butterfly",
       "puzzle_id": 2043,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 150,
       "slug": "level-150",
       "title": "Fortress 150",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2050,
       "difficulty": 4,
       "note": ""
@@ -1355,17 +1355,17 @@
     {
       "level": 151,
       "slug": "level-151",
-      "title": "Palace 151",
-      "layout_id": "dragon",
+      "title": "Courtyard 151",
+      "layout_id": "butterfly",
       "puzzle_id": 2057,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 152,
       "slug": "level-152",
       "title": "Fortress 152",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2064,
       "difficulty": 4,
       "note": ""
@@ -1373,17 +1373,17 @@
     {
       "level": 153,
       "slug": "level-153",
-      "title": "Palace 153",
-      "layout_id": "dragon",
+      "title": "Courtyard 153",
+      "layout_id": "butterfly",
       "puzzle_id": 2071,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 154,
       "slug": "level-154",
       "title": "Fortress 154",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2078,
       "difficulty": 4,
       "note": ""
@@ -1391,17 +1391,17 @@
     {
       "level": 155,
       "slug": "level-155",
-      "title": "Palace 155",
-      "layout_id": "dragon",
+      "title": "Courtyard 155",
+      "layout_id": "butterfly",
       "puzzle_id": 2085,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 156,
       "slug": "level-156",
       "title": "Fortress 156",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2092,
       "difficulty": 4,
       "note": ""
@@ -1410,7 +1410,7 @@
       "level": 157,
       "slug": "level-157",
       "title": "Palace 157",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 2099,
       "difficulty": 3,
       "note": ""
@@ -1419,7 +1419,7 @@
       "level": 158,
       "slug": "level-158",
       "title": "Fortress 158",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2106,
       "difficulty": 4,
       "note": ""
@@ -1427,17 +1427,17 @@
     {
       "level": 159,
       "slug": "level-159",
-      "title": "Palace 159",
-      "layout_id": "dragon",
+      "title": "Courtyard 159",
+      "layout_id": "butterfly",
       "puzzle_id": 2113,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 160,
       "slug": "level-160",
       "title": "Fortress 160",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2120,
       "difficulty": 4,
       "note": ""
@@ -1446,7 +1446,7 @@
       "level": 161,
       "slug": "level-161",
       "title": "Palace 161",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 2127,
       "difficulty": 3,
       "note": ""
@@ -1455,7 +1455,7 @@
       "level": 162,
       "slug": "level-162",
       "title": "Fortress 162",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2134,
       "difficulty": 4,
       "note": ""
@@ -1463,17 +1463,17 @@
     {
       "level": 163,
       "slug": "level-163",
-      "title": "Palace 163",
-      "layout_id": "dragon",
+      "title": "Courtyard 163",
+      "layout_id": "butterfly",
       "puzzle_id": 2141,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 164,
       "slug": "level-164",
       "title": "Fortress 164",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2148,
       "difficulty": 4,
       "note": ""
@@ -1481,17 +1481,17 @@
     {
       "level": 165,
       "slug": "level-165",
-      "title": "Palace 165",
-      "layout_id": "dragon",
+      "title": "Courtyard 165",
+      "layout_id": "butterfly",
       "puzzle_id": 2155,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 166,
       "slug": "level-166",
       "title": "Fortress 166",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2162,
       "difficulty": 4,
       "note": ""
@@ -1500,7 +1500,7 @@
       "level": 167,
       "slug": "level-167",
       "title": "Palace 167",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 2169,
       "difficulty": 3,
       "note": ""
@@ -1509,7 +1509,7 @@
       "level": 168,
       "slug": "level-168",
       "title": "Fortress 168",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2176,
       "difficulty": 4,
       "note": ""
@@ -1518,7 +1518,7 @@
       "level": 169,
       "slug": "level-169",
       "title": "Palace 169",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 2183,
       "difficulty": 3,
       "note": ""
@@ -1527,7 +1527,7 @@
       "level": 170,
       "slug": "level-170",
       "title": "Fortress 170",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2190,
       "difficulty": 4,
       "note": ""
@@ -1536,7 +1536,7 @@
       "level": 171,
       "slug": "level-171",
       "title": "Palace 171",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 2197,
       "difficulty": 3,
       "note": ""
@@ -1545,7 +1545,7 @@
       "level": 172,
       "slug": "level-172",
       "title": "Fortress 172",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2204,
       "difficulty": 4,
       "note": ""
@@ -1554,7 +1554,7 @@
       "level": 173,
       "slug": "level-173",
       "title": "Palace 173",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 2211,
       "difficulty": 3,
       "note": ""
@@ -1563,7 +1563,7 @@
       "level": 174,
       "slug": "level-174",
       "title": "Fortress 174",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2218,
       "difficulty": 4,
       "note": ""
@@ -1571,17 +1571,17 @@
     {
       "level": 175,
       "slug": "level-175",
-      "title": "Palace 175",
-      "layout_id": "dragon",
+      "title": "Courtyard 175",
+      "layout_id": "butterfly",
       "puzzle_id": 2225,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 176,
       "slug": "level-176",
       "title": "Fortress 176",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2232,
       "difficulty": 4,
       "note": ""
@@ -1590,7 +1590,7 @@
       "level": 177,
       "slug": "level-177",
       "title": "Palace 177",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 2239,
       "difficulty": 3,
       "note": ""
@@ -1599,7 +1599,7 @@
       "level": 178,
       "slug": "level-178",
       "title": "Fortress 178",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2246,
       "difficulty": 4,
       "note": ""
@@ -1607,17 +1607,17 @@
     {
       "level": 179,
       "slug": "level-179",
-      "title": "Palace 179",
-      "layout_id": "dragon",
+      "title": "Courtyard 179",
+      "layout_id": "butterfly",
       "puzzle_id": 2253,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 180,
       "slug": "level-180",
       "title": "Fortress 180",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2260,
       "difficulty": 4,
       "note": ""
@@ -1625,17 +1625,17 @@
     {
       "level": 181,
       "slug": "level-181",
-      "title": "Palace 181",
-      "layout_id": "dragon",
+      "title": "Courtyard 181",
+      "layout_id": "butterfly",
       "puzzle_id": 2267,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 182,
       "slug": "level-182",
       "title": "Fortress 182",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2274,
       "difficulty": 4,
       "note": ""
@@ -1643,17 +1643,17 @@
     {
       "level": 183,
       "slug": "level-183",
-      "title": "Palace 183",
-      "layout_id": "dragon",
+      "title": "Courtyard 183",
+      "layout_id": "butterfly",
       "puzzle_id": 2281,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 184,
       "slug": "level-184",
       "title": "Fortress 184",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2288,
       "difficulty": 4,
       "note": ""
@@ -1662,7 +1662,7 @@
       "level": 185,
       "slug": "level-185",
       "title": "Palace 185",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 2295,
       "difficulty": 3,
       "note": ""
@@ -1671,7 +1671,7 @@
       "level": 186,
       "slug": "level-186",
       "title": "Fortress 186",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2302,
       "difficulty": 4,
       "note": ""
@@ -1679,17 +1679,17 @@
     {
       "level": 187,
       "slug": "level-187",
-      "title": "Palace 187",
-      "layout_id": "dragon",
+      "title": "Courtyard 187",
+      "layout_id": "butterfly",
       "puzzle_id": 2309,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 188,
       "slug": "level-188",
       "title": "Fortress 188",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2316,
       "difficulty": 4,
       "note": ""
@@ -1697,17 +1697,17 @@
     {
       "level": 189,
       "slug": "level-189",
-      "title": "Palace 189",
-      "layout_id": "dragon",
+      "title": "Courtyard 189",
+      "layout_id": "butterfly",
       "puzzle_id": 2323,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 190,
       "slug": "level-190",
       "title": "Fortress 190",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2330,
       "difficulty": 4,
       "note": ""
@@ -1716,7 +1716,7 @@
       "level": 191,
       "slug": "level-191",
       "title": "Palace 191",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 2337,
       "difficulty": 3,
       "note": ""
@@ -1725,7 +1725,7 @@
       "level": 192,
       "slug": "level-192",
       "title": "Fortress 192",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2344,
       "difficulty": 4,
       "note": ""
@@ -1734,7 +1734,7 @@
       "level": 193,
       "slug": "level-193",
       "title": "Palace 193",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 2351,
       "difficulty": 3,
       "note": ""
@@ -1743,7 +1743,7 @@
       "level": 194,
       "slug": "level-194",
       "title": "Fortress 194",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2358,
       "difficulty": 4,
       "note": ""
@@ -1751,17 +1751,17 @@
     {
       "level": 195,
       "slug": "level-195",
-      "title": "Palace 195",
-      "layout_id": "dragon",
+      "title": "Courtyard 195",
+      "layout_id": "butterfly",
       "puzzle_id": 2365,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 196,
       "slug": "level-196",
       "title": "Fortress 196",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2372,
       "difficulty": 4,
       "note": ""
@@ -1770,7 +1770,7 @@
       "level": 197,
       "slug": "level-197",
       "title": "Palace 197",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 2379,
       "difficulty": 3,
       "note": ""
@@ -1779,7 +1779,7 @@
       "level": 198,
       "slug": "level-198",
       "title": "Fortress 198",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2386,
       "difficulty": 4,
       "note": ""
@@ -1787,17 +1787,17 @@
     {
       "level": 199,
       "slug": "level-199",
-      "title": "Palace 199",
-      "layout_id": "dragon",
+      "title": "Courtyard 199",
+      "layout_id": "butterfly",
       "puzzle_id": 2393,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 200,
       "slug": "level-200",
       "title": "Fortress 200",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2400,
       "difficulty": 4,
       "note": ""
@@ -1806,7 +1806,7 @@
       "level": 201,
       "slug": "level-201",
       "title": "Citadel 201",
-      "layout_id": "pyramid",
+      "layout_id": "turtle",
       "puzzle_id": 2407,
       "difficulty": 5,
       "note": ""
@@ -1815,7 +1815,7 @@
       "level": 202,
       "slug": "level-202",
       "title": "Citadel 202",
-      "layout_id": "turtle",
+      "layout_id": "crab",
       "puzzle_id": 2414,
       "difficulty": 5,
       "note": ""
@@ -1823,17 +1823,17 @@
     {
       "level": 203,
       "slug": "level-203",
-      "title": "Courtyard 203",
-      "layout_id": "waterfall",
+      "title": "Fortress 203",
+      "layout_id": "lantern",
       "puzzle_id": 2421,
-      "difficulty": 2,
+      "difficulty": 4,
       "note": ""
     },
     {
       "level": 204,
       "slug": "level-204",
       "title": "Citadel 204",
-      "layout_id": "turtle",
+      "layout_id": "crab",
       "puzzle_id": 2428,
       "difficulty": 5,
       "note": ""
@@ -1841,55 +1841,55 @@
     {
       "level": 205,
       "slug": "level-205",
-      "title": "Courtyard 205",
-      "layout_id": "waterfall",
+      "title": "Fortress 205",
+      "layout_id": "lantern",
       "puzzle_id": 2435,
-      "difficulty": 2,
+      "difficulty": 4,
       "note": ""
     },
     {
       "level": 206,
       "slug": "level-206",
-      "title": "Fortress 206",
-      "layout_id": "cat",
+      "title": "Courtyard 206",
+      "layout_id": "arena",
       "puzzle_id": 2442,
-      "difficulty": 4,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 207,
       "slug": "level-207",
-      "title": "Palace 207",
-      "layout_id": "dragon",
+      "title": "Citadel 207",
+      "layout_id": "crab",
       "puzzle_id": 2449,
-      "difficulty": 3,
+      "difficulty": 5,
       "note": ""
     },
     {
       "level": 208,
       "slug": "level-208",
-      "title": "Citadel 208",
-      "layout_id": "turtle",
+      "title": "Courtyard 208",
+      "layout_id": "butterfly",
       "puzzle_id": 2456,
-      "difficulty": 5,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 209,
       "slug": "level-209",
-      "title": "Citadel 209",
-      "layout_id": "pyramid",
+      "title": "Fortress 209",
+      "layout_id": "cat",
       "puzzle_id": 2463,
-      "difficulty": 5,
+      "difficulty": 4,
       "note": ""
     },
     {
       "level": 210,
       "slug": "level-210",
-      "title": "Fortress 210",
-      "layout_id": "cat",
+      "title": "Citadel 210",
+      "layout_id": "turtle",
       "puzzle_id": 2470,
-      "difficulty": 4,
+      "difficulty": 5,
       "note": ""
     },
     {
@@ -1904,10 +1904,10 @@
     {
       "level": 212,
       "slug": "level-212",
-      "title": "Fortress 212",
-      "layout_id": "cat",
+      "title": "Citadel 212",
+      "layout_id": "turtle",
       "puzzle_id": 2484,
-      "difficulty": 4,
+      "difficulty": 5,
       "note": ""
     },
     {
@@ -1922,73 +1922,73 @@
     {
       "level": 214,
       "slug": "level-214",
-      "title": "Courtyard 214",
-      "layout_id": "spider",
+      "title": "Fortress 214",
+      "layout_id": "lantern",
       "puzzle_id": 2498,
-      "difficulty": 2,
+      "difficulty": 4,
       "note": ""
     },
     {
       "level": 215,
       "slug": "level-215",
-      "title": "Palace 215",
-      "layout_id": "dragon",
+      "title": "Citadel 215",
+      "layout_id": "pyramid",
       "puzzle_id": 2505,
-      "difficulty": 3,
+      "difficulty": 5,
       "note": ""
     },
     {
       "level": 216,
       "slug": "level-216",
-      "title": "Citadel 216",
-      "layout_id": "fortress",
+      "title": "Palace 216",
+      "layout_id": "tower",
       "puzzle_id": 2512,
-      "difficulty": 5,
+      "difficulty": 3,
       "note": ""
     },
     {
       "level": 217,
       "slug": "level-217",
-      "title": "Courtyard 217",
-      "layout_id": "butterfly",
+      "title": "Citadel 217",
+      "layout_id": "turtle",
       "puzzle_id": 2519,
-      "difficulty": 2,
+      "difficulty": 5,
       "note": ""
     },
     {
       "level": 218,
       "slug": "level-218",
-      "title": "Citadel 218",
-      "layout_id": "turtle",
+      "title": "Fortress 218",
+      "layout_id": "gate",
       "puzzle_id": 2526,
-      "difficulty": 5,
+      "difficulty": 4,
       "note": ""
     },
     {
       "level": 219,
       "slug": "level-219",
-      "title": "Citadel 219",
-      "layout_id": "pyramid",
+      "title": "Fortress 219",
+      "layout_id": "lantern",
       "puzzle_id": 2533,
-      "difficulty": 5,
+      "difficulty": 4,
       "note": ""
     },
     {
       "level": 220,
       "slug": "level-220",
-      "title": "Citadel 220",
-      "layout_id": "turtle",
+      "title": "Fortress 220",
+      "layout_id": "gate",
       "puzzle_id": 2540,
-      "difficulty": 5,
+      "difficulty": 4,
       "note": ""
     },
     {
       "level": 221,
       "slug": "level-221",
-      "title": "Citadel 221",
-      "layout_id": "pyramid",
+      "title": "Fortress 221",
+      "layout_id": "lantern",
       "puzzle_id": 2547,
-      "difficulty": 5,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -2003,19 +2003,19 @@
     {
       "level": 223,
       "slug": "level-223",
-      "title": "Courtyard 223",
-      "layout_id": "waterfall",
+      "title": "Citadel 223",
+      "layout_id": "crab",
       "puzzle_id": 2561,
-      "difficulty": 2,
+      "difficulty": 5,
       "note": ""
     },
     {
       "level": 224,
       "slug": "level-224",
-      "title": "Courtyard 224",
-      "layout_id": "spider",
+      "title": "Fortress 224",
+      "layout_id": "gate",
       "puzzle_id": 2568,
-      "difficulty": 2,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -2030,89 +2030,89 @@
     {
       "level": 226,
       "slug": "level-226",
-      "title": "Fortress 226",
-      "layout_id": "cat",
+      "title": "Citadel 226",
+      "layout_id": "temple",
       "puzzle_id": 2582,
-      "difficulty": 4,
+      "difficulty": 5,
       "note": ""
     },
     {
       "level": 227,
       "slug": "level-227",
-      "title": "Palace 227",
-      "layout_id": "dragon",
+      "title": "Fortress 227",
+      "layout_id": "blossom",
       "puzzle_id": 2589,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
       "level": 228,
       "slug": "level-228",
-      "title": "Courtyard 228",
-      "layout_id": "arena",
+      "title": "Fortress 228",
+      "layout_id": "cat",
       "puzzle_id": 2596,
-      "difficulty": 2,
+      "difficulty": 4,
       "note": ""
     },
     {
       "level": 229,
       "slug": "level-229",
-      "title": "Palace 229",
-      "layout_id": "butterfly",
+      "title": "Fortress 229",
+      "layout_id": "gate",
       "puzzle_id": 2603,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
       "level": 230,
       "slug": "level-230",
-      "title": "Courtyard 230",
-      "layout_id": "spider",
+      "title": "Citadel 230",
+      "layout_id": "fortress",
       "puzzle_id": 2610,
-      "difficulty": 2,
+      "difficulty": 5,
       "note": ""
     },
     {
       "level": 231,
       "slug": "level-231",
-      "title": "Palace 231",
-      "layout_id": "tower",
+      "title": "Citadel 231",
+      "layout_id": "temple",
       "puzzle_id": 2617,
-      "difficulty": 3,
+      "difficulty": 5,
       "note": ""
     },
     {
       "level": 232,
       "slug": "level-232",
-      "title": "Fortress 232",
-      "layout_id": "cat",
+      "title": "Palace 232",
+      "layout_id": "butterfly",
       "puzzle_id": 2624,
-      "difficulty": 4,
+      "difficulty": 3,
       "note": ""
     },
     {
       "level": 233,
       "slug": "level-233",
-      "title": "Palace 233",
-      "layout_id": "dragon",
+      "title": "Citadel 233",
+      "layout_id": "fortress",
       "puzzle_id": 2631,
-      "difficulty": 3,
+      "difficulty": 5,
       "note": ""
     },
     {
       "level": 234,
       "slug": "level-234",
-      "title": "Citadel 234",
-      "layout_id": "turtle",
+      "title": "Courtyard 234",
+      "layout_id": "fish",
       "puzzle_id": 2638,
-      "difficulty": 5,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 235,
       "slug": "level-235",
       "title": "Courtyard 235",
-      "layout_id": "waterfall",
+      "layout_id": "spider",
       "puzzle_id": 2645,
       "difficulty": 2,
       "note": ""
@@ -2120,26 +2120,26 @@
     {
       "level": 236,
       "slug": "level-236",
-      "title": "Courtyard 236",
-      "layout_id": "spider",
+      "title": "Citadel 236",
+      "layout_id": "turtle",
       "puzzle_id": 2652,
-      "difficulty": 2,
+      "difficulty": 5,
       "note": ""
     },
     {
       "level": 237,
       "slug": "level-237",
-      "title": "Palace 237",
-      "layout_id": "tower",
+      "title": "Courtyard 237",
+      "layout_id": "butterfly",
       "puzzle_id": 2659,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 238,
       "slug": "level-238",
       "title": "Fortress 238",
-      "layout_id": "cat",
+      "layout_id": "bridge",
       "puzzle_id": 2666,
       "difficulty": 4,
       "note": ""
@@ -2148,7 +2148,7 @@
       "level": 239,
       "slug": "level-239",
       "title": "Palace 239",
-      "layout_id": "dragon",
+      "layout_id": "fish",
       "puzzle_id": 2673,
       "difficulty": 3,
       "note": ""
@@ -2156,17 +2156,17 @@
     {
       "level": 240,
       "slug": "level-240",
-      "title": "Courtyard 240",
-      "layout_id": "spider",
+      "title": "Citadel 240",
+      "layout_id": "temple",
       "puzzle_id": 2680,
-      "difficulty": 2,
+      "difficulty": 5,
       "note": ""
     },
     {
       "level": 241,
       "slug": "level-241",
       "title": "Palace 241",
-      "layout_id": "dragon",
+      "layout_id": "tower",
       "puzzle_id": 2687,
       "difficulty": 3,
       "note": ""
@@ -2174,37 +2174,37 @@
     {
       "level": 242,
       "slug": "level-242",
-      "title": "Fortress 242",
-      "layout_id": "cat",
+      "title": "Courtyard 242",
+      "layout_id": "arena",
       "puzzle_id": 2694,
-      "difficulty": 4,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 243,
       "slug": "level-243",
-      "title": "Palace 243",
-      "layout_id": "waterfall",
+      "title": "Fortress 243",
+      "layout_id": "blossom",
       "puzzle_id": 2701,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
       "level": 244,
       "slug": "level-244",
-      "title": "Courtyard 244",
-      "layout_id": "arena",
+      "title": "Citadel 244",
+      "layout_id": "fortress",
       "puzzle_id": 2708,
-      "difficulty": 2,
+      "difficulty": 5,
       "note": ""
     },
     {
       "level": 245,
       "slug": "level-245",
-      "title": "Palace 245",
-      "layout_id": "tower",
+      "title": "Fortress 245",
+      "layout_id": "gate",
       "puzzle_id": 2715,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
@@ -2219,35 +2219,35 @@
     {
       "level": 247,
       "slug": "level-247",
-      "title": "Palace 247",
-      "layout_id": "dragon",
+      "title": "Citadel 247",
+      "layout_id": "temple",
       "puzzle_id": 2729,
-      "difficulty": 3,
+      "difficulty": 5,
       "note": ""
     },
     {
       "level": 248,
       "slug": "level-248",
-      "title": "Fortress 248",
-      "layout_id": "cat",
+      "title": "Courtyard 248",
+      "layout_id": "fish",
       "puzzle_id": 2736,
-      "difficulty": 4,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 249,
       "slug": "level-249",
-      "title": "Courtyard 249",
-      "layout_id": "waterfall",
+      "title": "Citadel 249",
+      "layout_id": "fortress",
       "puzzle_id": 2743,
-      "difficulty": 2,
+      "difficulty": 5,
       "note": ""
     },
     {
       "level": 250,
       "slug": "level-250",
       "title": "Citadel 250",
-      "layout_id": "turtle",
+      "layout_id": "pyramid",
       "puzzle_id": 2750,
       "difficulty": 5,
       "note": ""
@@ -2255,26 +2255,26 @@
     {
       "level": 251,
       "slug": "level-251",
-      "title": "Citadel 251",
-      "layout_id": "pyramid",
+      "title": "Courtyard 251",
+      "layout_id": "spider",
       "puzzle_id": 2757,
-      "difficulty": 5,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 252,
       "slug": "level-252",
-      "title": "Courtyard 252",
-      "layout_id": "spider",
+      "title": "Fortress 252",
+      "layout_id": "bridge",
       "puzzle_id": 2764,
-      "difficulty": 2,
+      "difficulty": 4,
       "note": ""
     },
     {
       "level": 253,
       "slug": "level-253",
       "title": "Palace 253",
-      "layout_id": "dragon",
+      "layout_id": "butterfly",
       "puzzle_id": 2771,
       "difficulty": 3,
       "note": ""
@@ -2282,100 +2282,100 @@
     {
       "level": 254,
       "slug": "level-254",
-      "title": "Fortress 254",
-      "layout_id": "cat",
+      "title": "Palace 254",
+      "layout_id": "dragon",
       "puzzle_id": 2778,
-      "difficulty": 4,
+      "difficulty": 3,
       "note": ""
     },
     {
       "level": 255,
       "slug": "level-255",
-      "title": "Palace 255",
-      "layout_id": "waterfall",
+      "title": "Courtyard 255",
+      "layout_id": "fish",
       "puzzle_id": 2785,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 256,
       "slug": "level-256",
-      "title": "Palace 256",
-      "layout_id": "dragon",
+      "title": "Fortress 256",
+      "layout_id": "cat",
       "puzzle_id": 2792,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
       "level": 257,
       "slug": "level-257",
-      "title": "Fortress 257",
-      "layout_id": "cat",
+      "title": "Palace 257",
+      "layout_id": "waterfall",
       "puzzle_id": 2799,
-      "difficulty": 4,
+      "difficulty": 3,
       "note": ""
     },
     {
       "level": 258,
       "slug": "level-258",
-      "title": "Courtyard 258",
-      "layout_id": "waterfall",
+      "title": "Fortress 258",
+      "layout_id": "gate",
       "puzzle_id": 2806,
-      "difficulty": 2,
+      "difficulty": 4,
       "note": ""
     },
     {
       "level": 259,
       "slug": "level-259",
-      "title": "Citadel 259",
-      "layout_id": "turtle",
+      "title": "Fortress 259",
+      "layout_id": "cat",
       "puzzle_id": 2813,
-      "difficulty": 5,
+      "difficulty": 4,
       "note": ""
     },
     {
       "level": 260,
       "slug": "level-260",
-      "title": "Courtyard 260",
-      "layout_id": "waterfall",
+      "title": "Fortress 260",
+      "layout_id": "cat",
       "puzzle_id": 2820,
-      "difficulty": 2,
+      "difficulty": 4,
       "note": ""
     },
     {
       "level": 261,
       "slug": "level-261",
-      "title": "Citadel 261",
-      "layout_id": "turtle",
+      "title": "Courtyard 261",
+      "layout_id": "waterfall",
       "puzzle_id": 2827,
-      "difficulty": 5,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 262,
       "slug": "level-262",
-      "title": "Citadel 262",
-      "layout_id": "pyramid",
+      "title": "Fortress 262",
+      "layout_id": "gate",
       "puzzle_id": 2834,
-      "difficulty": 5,
+      "difficulty": 4,
       "note": ""
     },
     {
       "level": 263,
       "slug": "level-263",
-      "title": "Citadel 263",
-      "layout_id": "fortress",
+      "title": "Fortress 263",
+      "layout_id": "cat",
       "puzzle_id": 2841,
-      "difficulty": 5,
+      "difficulty": 4,
       "note": ""
     },
     {
       "level": 264,
       "slug": "level-264",
-      "title": "Palace 264",
-      "layout_id": "tower",
+      "title": "Courtyard 264",
+      "layout_id": "arena",
       "puzzle_id": 2848,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
@@ -2390,71 +2390,71 @@
     {
       "level": 266,
       "slug": "level-266",
-      "title": "Palace 266",
-      "layout_id": "dragon",
+      "title": "Citadel 266",
+      "layout_id": "crab",
       "puzzle_id": 2862,
-      "difficulty": 3,
+      "difficulty": 5,
       "note": ""
     },
     {
       "level": 267,
       "slug": "level-267",
-      "title": "Fortress 267",
-      "layout_id": "cat",
+      "title": "Courtyard 267",
+      "layout_id": "arena",
       "puzzle_id": 2869,
-      "difficulty": 4,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 268,
       "slug": "level-268",
-      "title": "Palace 268",
-      "layout_id": "dragon",
+      "title": "Courtyard 268",
+      "layout_id": "arena",
       "puzzle_id": 2876,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 269,
       "slug": "level-269",
-      "title": "Fortress 269",
-      "layout_id": "cat",
+      "title": "Courtyard 269",
+      "layout_id": "spider",
       "puzzle_id": 2883,
-      "difficulty": 4,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 270,
       "slug": "level-270",
-      "title": "Palace 270",
-      "layout_id": "waterfall",
+      "title": "Citadel 270",
+      "layout_id": "crab",
       "puzzle_id": 2890,
-      "difficulty": 3,
+      "difficulty": 5,
       "note": ""
     },
     {
       "level": 271,
       "slug": "level-271",
-      "title": "Citadel 271",
-      "layout_id": "turtle",
+      "title": "Courtyard 271",
+      "layout_id": "arena",
       "puzzle_id": 2897,
-      "difficulty": 5,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 272,
       "slug": "level-272",
-      "title": "Palace 272",
-      "layout_id": "dragon",
+      "title": "Courtyard 272",
+      "layout_id": "arena",
       "puzzle_id": 2904,
-      "difficulty": 3,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 273,
       "slug": "level-273",
       "title": "Courtyard 273",
-      "layout_id": "spider",
+      "layout_id": "waterfall",
       "puzzle_id": 2911,
       "difficulty": 2,
       "note": ""
@@ -2462,10 +2462,10 @@
     {
       "level": 274,
       "slug": "level-274",
-      "title": "Courtyard 274",
-      "layout_id": "waterfall",
+      "title": "Citadel 274",
+      "layout_id": "crab",
       "puzzle_id": 2918,
-      "difficulty": 2,
+      "difficulty": 5,
       "note": ""
     },
     {
@@ -2481,7 +2481,7 @@
       "level": 276,
       "slug": "level-276",
       "title": "Courtyard 276",
-      "layout_id": "waterfall",
+      "layout_id": "arena",
       "puzzle_id": 2932,
       "difficulty": 2,
       "note": ""
@@ -2489,17 +2489,17 @@
     {
       "level": 277,
       "slug": "level-277",
-      "title": "Fortress 277",
-      "layout_id": "cat",
+      "title": "Courtyard 277",
+      "layout_id": "waterfall",
       "puzzle_id": 2939,
-      "difficulty": 4,
+      "difficulty": 2,
       "note": ""
     },
     {
       "level": 278,
       "slug": "level-278",
       "title": "Citadel 278",
-      "layout_id": "pyramid",
+      "layout_id": "crab",
       "puzzle_id": 2946,
       "difficulty": 5,
       "note": ""
@@ -2507,26 +2507,26 @@
     {
       "level": 279,
       "slug": "level-279",
-      "title": "Citadel 279",
-      "layout_id": "turtle",
+      "title": "Fortress 279",
+      "layout_id": "cat",
       "puzzle_id": 2953,
-      "difficulty": 5,
+      "difficulty": 4,
       "note": ""
     },
     {
       "level": 280,
       "slug": "level-280",
-      "title": "Palace 280",
-      "layout_id": "tower",
+      "title": "Citadel 280",
+      "layout_id": "temple",
       "puzzle_id": 2960,
-      "difficulty": 3,
+      "difficulty": 5,
       "note": ""
     },
     {
       "level": 281,
       "slug": "level-281",
       "title": "Courtyard 281",
-      "layout_id": "arena",
+      "layout_id": "spider",
       "puzzle_id": 2967,
       "difficulty": 2,
       "note": ""
@@ -2534,17 +2534,17 @@
     {
       "level": 282,
       "slug": "level-282",
-      "title": "Palace 282",
-      "layout_id": "dragon",
+      "title": "Fortress 282",
+      "layout_id": "blossom",
       "puzzle_id": 2974,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
       "level": 283,
       "slug": "level-283",
       "title": "Courtyard 283",
-      "layout_id": "spider",
+      "layout_id": "arena",
       "puzzle_id": 2981,
       "difficulty": 2,
       "note": ""
@@ -2552,10 +2552,10 @@
     {
       "level": 284,
       "slug": "level-284",
-      "title": "Palace 284",
-      "layout_id": "dragon",
+      "title": "Citadel 284",
+      "layout_id": "temple",
       "puzzle_id": 2988,
-      "difficulty": 3,
+      "difficulty": 5,
       "note": ""
     },
     {
@@ -2570,19 +2570,19 @@
     {
       "level": 286,
       "slug": "level-286",
-      "title": "Courtyard 286",
-      "layout_id": "waterfall",
+      "title": "Fortress 286",
+      "layout_id": "blossom",
       "puzzle_id": 3002,
-      "difficulty": 2,
+      "difficulty": 4,
       "note": ""
     },
     {
       "level": 287,
       "slug": "level-287",
-      "title": "Fortress 287",
-      "layout_id": "cat",
+      "title": "Courtyard 287",
+      "layout_id": "arena",
       "puzzle_id": 3009,
-      "difficulty": 4,
+      "difficulty": 2,
       "note": ""
     },
     {
@@ -2598,7 +2598,7 @@
       "level": 289,
       "slug": "level-289",
       "title": "Fortress 289",
-      "layout_id": "cat",
+      "layout_id": "blossom",
       "puzzle_id": 3023,
       "difficulty": 4,
       "note": ""
@@ -2606,100 +2606,100 @@
     {
       "level": 290,
       "slug": "level-290",
-      "title": "Palace 290",
-      "layout_id": "tower",
+      "title": "Fortress 290",
+      "layout_id": "bridge",
       "puzzle_id": 3030,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
       "level": 291,
       "slug": "level-291",
-      "title": "Courtyard 291",
-      "layout_id": "spider",
+      "title": "Palace 291",
+      "layout_id": "tower",
       "puzzle_id": 3037,
-      "difficulty": 2,
+      "difficulty": 3,
       "note": ""
     },
     {
       "level": 292,
       "slug": "level-292",
-      "title": "Courtyard 292",
-      "layout_id": "waterfall",
+      "title": "Palace 292",
+      "layout_id": "dragon",
       "puzzle_id": 3044,
-      "difficulty": 2,
+      "difficulty": 3,
       "note": ""
     },
     {
       "level": 293,
       "slug": "level-293",
-      "title": "Citadel 293",
-      "layout_id": "turtle",
+      "title": "Fortress 293",
+      "layout_id": "blossom",
       "puzzle_id": 3051,
-      "difficulty": 5,
+      "difficulty": 4,
       "note": ""
     },
     {
       "level": 294,
       "slug": "level-294",
-      "title": "Palace 294",
-      "layout_id": "dragon",
+      "title": "Fortress 294",
+      "layout_id": "bridge",
       "puzzle_id": 3058,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
       "level": 295,
       "slug": "level-295",
-      "title": "Fortress 295",
-      "layout_id": "cat",
+      "title": "Palace 295",
+      "layout_id": "tower",
       "puzzle_id": 3065,
-      "difficulty": 4,
+      "difficulty": 3,
       "note": ""
     },
     {
       "level": 296,
       "slug": "level-296",
-      "title": "Palace 296",
-      "layout_id": "tower",
+      "title": "Fortress 296",
+      "layout_id": "bridge",
       "puzzle_id": 3072,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     },
     {
       "level": 297,
       "slug": "level-297",
-      "title": "Courtyard 297",
-      "layout_id": "spider",
+      "title": "Palace 297",
+      "layout_id": "tower",
       "puzzle_id": 3079,
-      "difficulty": 2,
+      "difficulty": 3,
       "note": ""
     },
     {
       "level": 298,
       "slug": "level-298",
-      "title": "Palace 298",
-      "layout_id": "butterfly",
+      "title": "Citadel 298",
+      "layout_id": "turtle",
       "puzzle_id": 3086,
-      "difficulty": 3,
+      "difficulty": 5,
       "note": ""
     },
     {
       "level": 299,
       "slug": "level-299",
-      "title": "Courtyard 299",
-      "layout_id": "arena",
+      "title": "Fortress 299",
+      "layout_id": "lantern",
       "puzzle_id": 3093,
-      "difficulty": 2,
+      "difficulty": 4,
       "note": ""
     },
     {
       "level": 300,
       "slug": "level-300",
-      "title": "Palace 300",
-      "layout_id": "dragon",
+      "title": "Fortress 300",
+      "layout_id": "bridge",
       "puzzle_id": 3100,
-      "difficulty": 3,
+      "difficulty": 4,
       "note": ""
     }
   ]

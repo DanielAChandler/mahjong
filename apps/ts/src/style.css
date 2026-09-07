@@ -85,8 +85,15 @@ html, body {
   border-radius: 7px;
 }
 
-.tile.free { filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.4)); }
-.tile:not(.free) { filter: brightness(0.72) saturate(0.85); cursor: default; }
+.tile.free { opacity: 1; }
+.tile:not(.free) { opacity: 0.55; cursor: default; }
+.tile.free::after {
+  content: "";
+  position: absolute; inset: 0 3px 3px 0;
+  border-radius: 7px;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.35);
+  pointer-events: none;
+}
 .tile.selected { transform: translateY(-8px); outline: 2px solid var(--accent); border-radius: 8px; }
 .tile.hint .tile-face { outline: 3px solid #ffd54d; animation: pulse 0.8s ease-in-out 2; }
 .tile.matched { transform: translate(var(--rx, 0), var(--ry, -60px)) rotate(12deg) scale(0.7); opacity: 0; transition: all 0.4s ease-out; }
@@ -101,6 +108,10 @@ html, body {
 }
 
 dialog {
+  max-height: min(80dvh, 80vh);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
   background: var(--panel); color: var(--text);
   border: 1px solid #39465e; border-radius: 16px;
   padding: 20px 24px; min-width: min(92vw, 420px); max-height: 84dvh; overflow: auto;

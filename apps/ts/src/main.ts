@@ -130,7 +130,29 @@ async function onWin(seconds: number) {
   persist.save(save);
   updatePowerups();
   const dlg = $("#win-dialog") as HTMLDialogElement;
-  $("#win-stats").textContent = `Cleared in ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")} — +${persist.REWARDS.win} coins (streak ${save.stats.currentStreak})`;
+  const t = `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
+  dlg.innerHTML = `
+    <h2>🎉 Board cleared!</h2>
+    <section>
+      <p id="win-stats">Time ${t} — +${persist.REWARDS.win} coins (streak ${save.stats.currentStreak})</p>
+      <p>🏆 ${save.stats.puzzlesCompleted} cleared · best streak ${save.stats.bestStreak} · ${save.coins} coins</p>
+      <button data-wact="next">▶ Next level</button>
+      <button data-wact="replay">↻ Play again</button>
+      <button data-wact="menu">☰ Menu</button>
+    </section>`;
+  dlg.onclick = (e) => {
+    const el = (e.target as HTMLElement).closest("button");
+    if (!el) return;
+    closeDialog(dlg);
+    if (el.dataset.wact === "next") {
+      currentMode = { kind: "campaign", level: nextLevel() };
+      game!.start(currentMode);
+      updatePowerups();
+    } else if (el.dataset.wact === "replay") {
+      game!.start(currentMode);
+      updatePowerups();
+    } else openMenu();
+  };
   openDialog(dlg);
 }
 
