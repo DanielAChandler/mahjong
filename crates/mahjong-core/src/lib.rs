@@ -6,6 +6,7 @@
 
 pub mod board;
 pub mod campaign;
+pub mod face_art;
 pub mod generator;
 pub mod hints;
 pub mod layout;

@@ -8,6 +8,7 @@ import init, {
   can_remove,
   shuffle,
   slot_coords,
+  face_svg,
 } from "../wasm-core/mahjong_wasm.js";
 
-export { init, mahjong_version, catalog, puzzle_for, campaign_puzzle, state, can_remove, shuffle, slot_coords };
+export { init, mahjong_version, catalog, puzzle_for, campaign_puzzle, state, can_remove, shuffle, slot_coords, face_svg };

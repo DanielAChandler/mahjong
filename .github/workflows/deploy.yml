@@ -90,8 +90,9 @@ jobs:
           mkdir -p site/rust
           cp -r artifacts/ts-dist/* site/
           cp -r artifacts/rust-dist/* site/rust/
-          # fix asset paths inside rust index for its subdirectory
-          sed -i 's|="/|="/mahjong/rust/|g; s|url(/|url(/mahjong/rust/|g' site/rust/index.html || true
+          # NOTE: no URL rewriting — trunk already emits /mahjong/rust/-based
+          # asset URLs when built with --public-url (a previous sed here
+          # double-prefixed them and 404'd the wasm).
       - uses: actions/configure-pages@v5
       - id: page
         uses: actions/upload-pages-artifact@v3

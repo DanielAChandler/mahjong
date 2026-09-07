@@ -145,9 +145,10 @@ fn render_board() {
             let py = key.y * 72 + (max_z as i32 - key.z as i32) * 14;
             tile.set_attribute("style", &format!("left:{}px;top:{}px;", px, py))
                 .unwrap();
+            let svg = mahjong_core::face_art::face_svg(FACE_IDS[face as usize], "classic");
             let face_html = format!(
-                r#"<div class="tile-side"></div><div class="tile-face"><span class="glyph">{}</span></div>"#,
-                FACE_IDS[face as usize]
+                r#"<div class="tile-side"></div><div class="tile-face" style="background:#f7f2e7"><svg viewBox="0 0 60 60" width="100%" height="100%">{}</svg></div>"#,
+                svg
             );
             tile.set_inner_html(&face_html);
             {
@@ -160,6 +161,34 @@ fn render_board() {
                 closure.forget();
             }
             inner.append_child(&tile).unwrap();
+        }
+
+        // fit board to viewport (mirrors TS renderer.fitToViewport)
+        let max_x = board.layout.keys.iter().map(|k| k.x).max().unwrap_or(8);
+        let max_y = board.layout.keys.iter().map(|k| k.y).max().unwrap_or(7);
+        let max_z = board.layout.max_z();
+        let bw = (max_x + 2) as f64 * 56.0 + 56.0;
+        let bh = (max_y + 2) as f64 * 72.0 + 14.0 * (max_z as f64 + 1.0) + 56.0;
+        inner.set_attribute(
+            "style",
+            &format!("width:{}px;height:{}px;transform-origin:center center;", bw, bh),
+        )
+        .unwrap();
+        if let Some(host) = container.dyn_ref::<HtmlElement>() {
+            let avail_w = host.client_width() as f64 - 8.0;
+            let avail_h = host.client_height() as f64 - 8.0;
+            if avail_w > 0.0 && avail_h > 0.0 {
+                let scale = (avail_w / bw).min(avail_h / bh).min(1.6);
+                inner
+                    .set_attribute(
+                        "style",
+                        &format!(
+                            "width:{}px;height:{}px;transform-origin:center center;transform:scale({});",
+                            bw, bh, scale
+                        ),
+                    )
+                    .unwrap();
+            }
         }
 
         let pairs = board.remaining / 2;

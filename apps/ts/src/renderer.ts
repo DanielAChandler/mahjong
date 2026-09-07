@@ -2,7 +2,7 @@
 // Chosen over canvas for crisp art at any DPI, easy hit-testing, and CSS
 // transitions for lift/match animations.
 
-import { faceSvg } from "./tileArt.js";
+import * as api from "./api.js";
 import type { ThemeTokens } from "./themes.js";
 import type { SlotDto } from "./engine.js";
 
@@ -113,7 +113,7 @@ export class Renderer {
     const t = this.theme;
     const idx = Number(el.dataset.idx);
     const faceId = el.dataset.faceId!;
-    const svg = faceSvg(0, faceId, t, this.TW);
+    const svg = api.face_svg(faceId, t.id);
     el.innerHTML = `
       <div class="tile-side"></div>
       <div class="tile-face" style="background:${t.palette.tileFace}">

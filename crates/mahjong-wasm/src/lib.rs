@@ -107,6 +107,12 @@ pub fn campaign_puzzle(level: f64) -> Result<JsValue, JsValue> {
     serde_wasm_bindgen::to_value(&p).map_err(|e| JsValue::from_str(&e.to_string()))
 }
 
+/// Tile face SVG for `face_id` rendered in `theme_id` — shared by both apps.
+#[wasm_bindgen]
+pub fn face_svg(face_id: &str, theme_id: &str) -> JsValue {
+    JsValue::from_str(&mahjong_core::face_art::face_svg(face_id, theme_id))
+}
+
 /// Slot coordinates (compiled layout order) for the renderer.
 #[wasm_bindgen]
 pub fn slot_coords(layout_id: &str) -> Result<JsValue, JsValue> {

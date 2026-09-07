@@ -30,6 +30,7 @@ function closeDialog(dlg: HTMLElement) {
   else dlg.removeAttribute("open");
 }
 
+let catalog: { layouts: { id: string; name: string; tile_count: number }[] } | null = null; // populated in boot
 let save = persist.load();
 let game: Game | null = null;
 let renderer: Renderer;
@@ -45,6 +46,7 @@ async function boot() {
     navigator.serviceWorker.register("./sw.js").catch(() => {});
   }
 
+  catalog = await api.catalog();
   renderer = new Renderer($("#board"), themeById(save.settings.theme));
   game = new Game(renderer, {
     onWin: onWin,
@@ -157,7 +159,7 @@ function openMenu() {
         <input id="inp-puzzle" type="number" min="1" placeholder="puzzle #" />
         <button data-act="load">Load #</button>
       </div>
-      <select id="sel-layout">${(window as any).__layouts.map((l: any) => `<option value="${l.id}">${l.name} (${l.tile_count})</option>`).join("")}</select>
+      <select id="sel-layout">${(catalog?.layouts ?? []).map((l) => `<option value="${l.id}">${l.name} (${l.tile_count})</option>`).join("")}</select>
     </section>
     <section>
       <h3>Theme</h3>
