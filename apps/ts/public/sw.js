@@ -1,6 +1,6 @@
 // Offline cache: app shell + assets, cache-first, base-path aware so the
 // GitHub Pages subpath deployment works (scope derives from SW location).
-const CACHE = "mahjong-v3";
+const CACHE = "mahjong-v4";
 const ASSETS = ["./", "./manifest.webmanifest"];
 
 self.addEventListener("install", (e) => {
@@ -10,11 +10,16 @@ self.addEventListener("install", (e) => {
 
 self.addEventListener("activate", (e) => {
   e.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))),
-    ),
+    (async () => {
+      // hard purge: drop ALL old caches, including the bad cache-first v1/v2
+      const keys = await caches.keys();
+      await Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)));
+      // tell every open client a new SW is active
+      const clients = await self.clients.matchAll({ includeUncontrolled: true });
+      for (const c of clients) c.postMessage({ type: "SW_UPDATED" });
+      await self.clients.claim();
+    })(),
   );
-  self.clients.claim();
 });
 
 self.addEventListener("fetch", (e) => {

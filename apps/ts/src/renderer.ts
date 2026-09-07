@@ -43,6 +43,22 @@ export class Renderer {
     window.addEventListener("resize", () => this.fitToViewport());
     window.addEventListener("orientationchange", () => this.fitToViewport());
     window.visualViewport?.addEventListener("resize", () => this.fitToViewport());
+    // iOS: host can be 0-sized at boot before flex settles; observe + retry.
+    if ("ResizeObserver" in window) {
+      new ResizeObserver(() => this.fitToViewport()).observe(root);
+    }
+    this.fitRetryLoop();
+  }
+
+  /** Re-apply fit until the host reports a non-zero size (max ~3s). */
+  private fitRetryLoop(n = 0) {
+    const host = this.boardEl.parentElement as HTMLElement | null;
+    if (host && host.clientWidth > 0 && host.clientHeight > 0) {
+      this.applyFit();
+      return;
+    }
+    if (n > 40) return;
+    requestAnimationFrame(() => setTimeout(() => this.fitRetryLoop(n + 1), 80));
   }
 
   setTheme(theme: ThemeTokens) {
@@ -106,7 +122,7 @@ export class Renderer {
     const bw = this.boardEl.scrollWidth || parseFloat(this.boardEl.style.width) || 0;
     const bh = this.boardEl.scrollHeight || parseFloat(this.boardEl.style.height) || 0;
     if (!bw || !bh) return;
-    const scale = Math.min(1.6, availW / bw, availH / bh);
+    const scale = Math.max(0.2, Math.min(1.6, availW / bw, availH / bh));
     this.boardEl.style.transform = `scale(${scale})`;
   }
 
@@ -120,13 +136,12 @@ export class Renderer {
 
   paintFace(el: HTMLElement) {
     const t = this.theme;
-    const idx = Number(el.dataset.idx);
     const faceId = el.dataset.faceId!;
     const svg = api.face_svg(faceId, t.id);
     el.innerHTML = `
       <div class="tile-side"></div>
       <div class="tile-face" style="background:${t.palette.tileFace}">
-        <svg viewBox="0 0 60 60" width="100%" height="100%">${svg}</svg>
+        <svg viewBox="0 0 139.764 200" width="100%" height="100%">${svg}</svg>
       </div>`;
     el.style.setProperty("--tile-edge", t.palette.tileEdge);
     el.style.setProperty("--tile-side", t.palette.tileSide);

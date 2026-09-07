@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "themes": [
     {
       "id": "classic",
@@ -15,6 +15,58 @@
         "text": "#4a3f2a"
       },
       "fontFamily": "Georgia, 'Noto Serif', serif"
+    },
+    {
+      "id": "jade",
+      "name": "Jade Court",
+      "style": "classic",
+      "palette": {
+        "boardBg": "#0f3d2e",
+        "boardBg2": "#07231a",
+        "tileFace": "#e6f2e9",
+        "tileEdge": "#c2d9c8",
+        "tileSide": "#a9c4b0",
+        "accent": "#52c98a",
+        "text": "#1e3a28"
+      },
+      "fontFamily": "Georgia, 'Noto Serif', serif",
+      "colorMap": {
+        "#00082d": "#0e4a38",
+        "#870000": "#a33d2a",
+        "#003a37": "#0f5c48",
+        "#560042": "#7a3a68",
+        "#133f00": "#2c6b3f",
+        "#a00283": "#b3568f",
+        "#3b67e2": "#4d8fd6",
+        "#e07f00": "#d9a441",
+        "#bc00a1": "#c05aa8"
+      }
+    },
+    {
+      "id": "imperial",
+      "name": "Imperial Red",
+      "style": "classic",
+      "palette": {
+        "boardBg": "#3a0f16",
+        "boardBg2": "#1f070b",
+        "tileFace": "#f9ede2",
+        "tileEdge": "#e5c9b8",
+        "tileSide": "#d4b09a",
+        "accent": "#e0563a",
+        "text": "#4a1f14"
+      },
+      "fontFamily": "'Palatino Linotype', 'Book Antiqua', Georgia, serif",
+      "colorMap": {
+        "#00082d": "#54101f",
+        "#870000": "#8f1d26",
+        "#003a37": "#00463f",
+        "#560042": "#6b1e50",
+        "#133f00": "#2f5a24",
+        "#a00283": "#a12d7d",
+        "#3b67e2": "#4668b8",
+        "#e07f00": "#d98a2b",
+        "#bc00a1": "#b02c93"
+      }
     },
     {
       "id": "flat",
@@ -44,12 +96,71 @@
         "accent": "#b18cff",
         "text": "#e8e4ff"
       },
-      "fontFamily": "Georgia, serif"
+      "fontFamily": "Georgia, serif",
+      "colorMap": {
+        "#00082d": "#8f7ad6",
+        "#870000": "#c96f8e",
+        "#003a37": "#6e9b8f",
+        "#560042": "#9a6fa8",
+        "#133f00": "#7fa06d",
+        "#a00283": "#b57ec5",
+        "#3b67e2": "#7a9be8",
+        "#e07f00": "#d4a96a",
+        "#bc00a1": "#a87cc0"
+      }
+    },
+    {
+      "id": "sakura",
+      "name": "Sakura Dusk",
+      "style": "seasonal",
+      "palette": {
+        "boardBg": "#2c1a2e",
+        "boardBg2": "#170d18",
+        "tileFace": "#fdeef2",
+        "tileEdge": "#f3cdd8",
+        "tileSide": "#e5b7c6",
+        "accent": "#f08cae",
+        "text": "#4a2432"
+      },
+      "fontFamily": "Georgia, serif",
+      "colorMap": {
+        "#00082d": "#5c3448",
+        "#870000": "#b5475f",
+        "#003a37": "#44706a",
+        "#560042": "#7a4a72",
+        "#133f00": "#5d7a46",
+        "#a00283": "#c26aa8",
+        "#3b67e2": "#7d9bd0",
+        "#e07f00": "#e0973f",
+        "#bc00a1": "#c76ab0"
+      }
     }
   ],
   "skins": [
-    { "id": "felt", "name": "Felt", "css": "radial-gradient(ellipse at center, #1d4d3a 0%, #0e2f23 70%)" },
-    { "id": "wood", "name": "Wood", "css": "linear-gradient(135deg, #5a3b1e 0%, #3a2513 100%)" },
-    { "id": "slate", "name": "Slate", "css": "linear-gradient(160deg, #2b3440 0%, #171d26 100%)" }
+    {
+      "id": "felt",
+      "name": "Felt",
+      "css": "radial-gradient(ellipse at center, #1d4d3a 0%, #0e2f23 70%)"
+    },
+    {
+      "id": "wood",
+      "name": "Wood",
+      "css": "linear-gradient(135deg, #5a3b1e 0%, #3a2513 100%)"
+    },
+    {
+      "id": "slate",
+      "name": "Slate",
+      "css": "linear-gradient(160deg, #2b3440 0%, #171d26 100%)"
+    },
+    {
+      "id": "obsidian",
+      "name": "Obsidian",
+      "css": "radial-gradient(ellipse at center, #26262e 0%, #0d0d12 75%)"
+    },
+    {
+      "id": "cherry",
+      "name": "Cherry",
+      "css": "linear-gradient(160deg, #4a1f2a 0%, #2a0f16 100%)"
+    }
   ]
 }

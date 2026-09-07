@@ -26,6 +26,14 @@ pub struct AppState {
 }
 
 thread_local! {
+    static THEME_ID: std::cell::RefCell<&'static str> = const { std::cell::RefCell::new("classic") };
+}
+
+fn set_theme(id: &'static str) {
+    THEME_ID.with(|t| *t.borrow_mut() = id);
+}
+
+thread_local! {
     static STATE: std::cell::RefCell<AppState> = std::cell::RefCell::new(AppState {
         board: None,
         layout_id: String::new(),
@@ -145,9 +153,9 @@ fn render_board() {
             let py = key.y * 72 + (max_z as i32 - key.z as i32) * 14;
             tile.set_attribute("style", &format!("left:{}px;top:{}px;", px, py))
                 .unwrap();
-            let svg = mahjong_core::face_art::face_svg(FACE_IDS[face as usize], "classic");
+            let svg = mahjong_core::face_art::face_svg(FACE_IDS[face as usize], THEME_ID.with(|t| *t.borrow()));
             let face_html = format!(
-                r#"<div class="tile-side"></div><div class="tile-face" style="background:#f7f2e7"><svg viewBox="0 0 60 60" width="100%" height="100%">{}</svg></div>"#,
+                r#"<div class="tile-side"></div><div class="tile-face" style="background:#f7f2e7"><svg viewBox="0 0 139.764 200" width="100%" height="100%">{}</svg></div>"#,
                 svg
             );
             tile.set_inner_html(&face_html);

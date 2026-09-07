@@ -3,7 +3,13 @@
 import { Window } from "happy-dom";
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 
-// find the built bundle among hashed assets
+// happy-dom polyfills/globals the bundle expects
+globalThis.ResizeObserver = class {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+};
+globalThis.requestAnimationFrame = (cb) => setTimeout(() => cb(performance.now()), 16);
 const { readdirSync } = await import("node:fs");
 const assets = readdirSync("dist/assets");
 const bundleName = assets.find((a) => a.startsWith("index-") && a.endsWith(".js"));

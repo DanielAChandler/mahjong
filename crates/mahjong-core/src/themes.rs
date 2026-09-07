@@ -27,6 +27,9 @@ pub struct Theme {
     #[serde(rename = "fontFamily")]
     pub font_family: String,
     pub style: String,
+    /// Optional remap of the tile-art source palette (9 colors) for this theme.
+    #[serde(rename = "colorMap", default, skip_serializing_if = "Option::is_none")]
+    pub color_map: Option<std::collections::BTreeMap<String, String>>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -52,4 +55,14 @@ pub fn embedded() -> &'static ThemeCatalog {
         ))
         .expect("embedded themes.json invalid")
     })
+}
+
+/// Tile-art color remap for a theme (face colors), if it defines one.
+pub fn color_map(theme_id: &str) -> Option<Vec<(String, String)>> {
+    embedded()
+        .themes
+        .iter()
+        .find(|t| t.id == theme_id)
+        .and_then(|t| t.color_map.as_ref())
+        .map(|m| m.iter().map(|(k, v)| (k.clone(), v.clone())).collect())
 }
