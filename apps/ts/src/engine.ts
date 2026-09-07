@@ -68,10 +68,13 @@ export class Game {
     this.stuckNotified = false;
     this.hintPair = null;
 
-    // geometry for the renderer
-    const cat = await api.catalog();
-    const lay = cat.layouts.find((l: any) => l.id === this.puzzle.layout_id);
-    this.renderer.setGeometry({ w: lay?.tile_count ? 14 : 14, h: 8, maxZ: lay?.layers ?? 1 });
+    // geometry for the renderer: derive real grid dims from the slot coords
+    // (the board must scale to the ACTUAL layout extent, not a hardcoded grid)
+    const slots = api.slot_coords(this.puzzle.layout_id);
+    const maxX = Math.max(...slots.map((s: any) => s.x));
+    const maxY = Math.max(...slots.map((s: any) => s.y));
+    const maxZ = Math.max(...slots.map((s: any) => s.z));
+    this.renderer.setGeometry({ w: maxX + 1, h: maxY + 1, maxZ: maxZ + 1 });
 
     const tiles = this.renderTiles();
     this.renderer.build(tiles, (idx) => this.onTile(idx));

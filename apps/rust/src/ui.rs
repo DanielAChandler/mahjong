@@ -69,7 +69,24 @@ pub fn run() {
     </div>
   </header>
   <main id="board"></main>
-  <p id="credit" style="position:fixed;left:8px;bottom:calc(4px + env(safe-area-inset-bottom));font-size:9px;opacity:.55;color:#e8ecf4;z-index:5;pointer-events:none">Tile art: 碧海风, CC BY-SA 4.0 (Wikimedia Commons)</p>
+  <div id="menu-overlay" hidden>
+    <div id="menu-panel">
+      <h2>Menu</h2>
+      <div class="menu-section">
+        <h3>Layout</h3>
+        <div id="menu-layouts"></div>
+      </div>
+      <div class="menu-section">
+        <h3>Theme</h3>
+        <div id="menu-themes"></div>
+      </div>
+      <div class="menu-actions">
+        <button id="menu-new">New game</button>
+        <button id="menu-close">Close</button>
+      </div>
+      <p class="menu-credit">Tile art: 碧海风 (Bihai feng), CC BY-SA 4.0 (Wikimedia Commons)</p>
+    </div>
+  </div>
   <div id="toast" hidden></div>
 </div>
 "#,
@@ -296,21 +313,119 @@ fn bind_toolbar() {
     undo.forget();
 
     let menu = Closure::<dyn Fn(_)>::new(move |_: wasm_bindgen::JsValue| {
-        // simple prompt-based infinite mode (parity scope: campaign + infinite)
-        let w = window().unwrap();
-        if let Ok(Some(v)) = w.prompt_with_message_and_default("Puzzle id (blank = campaign next)", "") {
-            if v.is_empty() {
-                start_campaign(1);
-            } else if let Ok(n) = v.parse::<u64>() {
-                start_infinite(n, "turtle");
-            }
-        }
+        open_menu();
     });
     el("btn-menu")
         .dyn_ref::<HtmlElement>()
         .unwrap()
         .set_onclick(Some(menu.as_ref().unchecked_ref()));
     menu.forget();
+
+    let close = Closure::<dyn Fn(_)>::new(move |_: wasm_bindgen::JsValue| {
+        el("menu-overlay").set_attribute("hidden", "").ok();
+    });
+    el("menu-close")
+        .dyn_ref::<HtmlElement>()
+        .unwrap()
+        .set_onclick(Some(close.as_ref().unchecked_ref()));
+    close.forget();
+
+    let new_game = Closure::<dyn Fn(_)>::new(move |_: wasm_bindgen::JsValue| {
+        el("menu-overlay").set_attribute("hidden", "").ok();
+        start_campaign(1);
+    });
+    el("menu-new")
+        .dyn_ref::<HtmlElement>()
+        .unwrap()
+        .set_onclick(Some(new_game.as_ref().unchecked_ref()));
+    new_game.forget();
+
+    // tap on the backdrop (outside the panel) closes the menu
+    let backdrop = Closure::<dyn Fn(_)>::new(move |e: wasm_bindgen::JsValue| {
+        let ev = e.unchecked_into::<web_sys::Event>();
+        if ev.target() == ev.current_target() {
+            el("menu-overlay").set_attribute("hidden", "").ok();
+        }
+    });
+    el("menu-overlay")
+        .dyn_ref::<HtmlElement>()
+        .unwrap()
+        .set_onclick(Some(backdrop.as_ref().unchecked_ref()));
+    backdrop.forget();
+}
+
+/// Build + show the menu dialog: layouts from embedded catalog, themes from
+/// embedded themes.json, both clickable.
+fn open_menu() {
+    let overlay = el("menu-overlay");
+
+    // layouts
+    let list = el("menu-layouts");
+    list.set_inner_html("");
+    for l in mahjong_core::layout::embedded_layouts().iter() {
+        let id = l.id.clone();
+        let btn = doc().create_element("button").unwrap();
+        btn.set_text_content(Some(&l.name));
+        btn.set_attribute("data-layout", &id).ok();
+        let closure = Closure::<dyn Fn(_)>::new(move |_: wasm_bindgen::JsValue| {
+            el("menu-overlay").set_attribute("hidden", "").ok();
+            start_infinite(1, &id);
+        });
+        btn.dyn_ref::<HtmlElement>()
+            .unwrap()
+            .set_onclick(Some(closure.as_ref().unchecked_ref()));
+        closure.forget();
+        list.append_child(&btn).unwrap();
+    }
+
+    // themes
+    let tlist = el("menu-themes");
+    tlist.set_inner_html("");
+    for t in mahjong_core::themes::embedded().themes.iter() {
+        let id: &'static str = Box::leak(t.id.clone().into_boxed_str());
+        let btn = doc().create_element("button").unwrap();
+        btn.set_text_content(Some(&t.name));
+        let closure = Closure::<dyn Fn(_)>::new(move |_: wasm_bindgen::JsValue| {
+            el("menu-overlay").set_attribute("hidden", "").ok();
+            set_theme(id);
+            apply_theme_shell();
+            render_board();
+        });
+        btn.dyn_ref::<HtmlElement>()
+            .unwrap()
+            .set_onclick(Some(closure.as_ref().unchecked_ref()));
+        closure.forget();
+        tlist.append_child(&btn).unwrap();
+    }
+    overlay.remove_attribute("hidden").ok();
+}
+
+/// Apply current theme to the app shell (background, accent).
+fn apply_theme_shell() {
+    let theme = mahjong_core::themes::embedded()
+        .themes
+        .iter()
+        .find(|t| t.id == THEME_ID.with(|t| *t.borrow()))
+        .cloned()
+        .unwrap_or_else(|| mahjong_core::themes::embedded().themes[0].clone());
+    if let Some(body) = doc().body() {
+        let bg = format!(
+            "radial-gradient(ellipse at center, {} 0%, {} 75%)",
+            theme.palette.board_bg, theme.palette.board_bg2
+        );
+        body.dyn_ref::<HtmlElement>()
+            .unwrap()
+            .style()
+            .set_property("background", &bg)
+            .ok();
+    }
+    if let Some(h) = doc().get_element_by_id("topbar") {
+        h.dyn_ref::<HtmlElement>()
+            .unwrap()
+            .style()
+            .set_property("border-bottom", &format!("2px solid {}", theme.palette.accent))
+            .ok();
+    }
 }
 
 fn start_timer_loop() {
@@ -331,7 +446,7 @@ fn start_timer_loop() {
 fn toast(msg: &str) {
     let t = el("toast");
     t.set_text_content(Some(msg));
-    t.set_attribute("hidden", "false").ok();
+    t.remove_attribute("hidden").ok();
     let w = window().unwrap();
     let f = Closure::<dyn Fn()>::new(move || {
         el("toast").set_attribute("hidden", "true").ok();
