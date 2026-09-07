@@ -4,7 +4,7 @@
   --text: #e8ecf4;
   --accent: #e8b04b;
   --tw: 54px;
-  --th: 74px;
+  --th: 70px;
   font-family: "Inter", "Segoe UI", system-ui, sans-serif;
 }
 
@@ -83,16 +83,16 @@ html, body {
 
 .tile-face {
   position: absolute; inset: 0 4px 4px 0;
-  border-radius: 8px;
+  border-radius: 7px;
   display: flex; align-items: center; justify-content: center;
-  /* clean matte ivory face; the suit art carries its own frame */
-  box-shadow: 0 2px 5px rgb(0 0 0 / 0.28);
+  /* plain ivory face — the 3D tile-side supplies the edge (no thick ring) */
+  box-shadow: 0 2px 4px rgb(0 0 0 / 0.25);
   overflow: hidden;
 }
 .tile-side {
   position: absolute; inset: 4px 0 0 4px;
-  background: var(--tile-side, #c9bd9f);
-  border-radius: 8px;
+  background: linear-gradient(180deg, var(--tile-side, #2a6b41), color-mix(in srgb, var(--tile-side, #2a6b41) 70%, #000));
+  border-radius: 7px;
 }
 
 .tile.free { opacity: 1; }

@@ -197,7 +197,7 @@ function openMenu() {
   const dlg = $("#menu-dialog") as HTMLDialogElement;
   const credit = document.createElement("p");
   credit.className = "menu-credit";
-  credit.textContent = "Tile art: 碧海风 (Bihai feng), CC BY-SA 4.0 (Wikimedia Commons)";
+  credit.textContent = "Tile art: original vector graphics (traditional mahjong motifs)";
   dlg.innerHTML = `
     <h2>Mahjong Solitaire</h2>
     <section>

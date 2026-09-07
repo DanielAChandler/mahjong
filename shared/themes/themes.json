@@ -8,9 +8,9 @@
       "palette": {
         "boardBg": "#1d4d3a",
         "boardBg2": "#0e2f23",
-        "tileFace": "#f7f2e7",
-        "tileEdge": "#d9cfb8",
-        "tileSide": "#c9bd9f",
+        "tileFace": "#fdfcf5",
+        "tileEdge": "#2f8f5a",
+        "tileSide": "#1e5c39",
         "accent": "#e8b04b",
         "text": "#4a3f2a"
       },
@@ -29,18 +29,7 @@
         "accent": "#52c98a",
         "text": "#1e3a28"
       },
-      "fontFamily": "Georgia, 'Noto Serif', serif",
-      "colorMap": {
-        "#00082d": "#0e4a38",
-        "#870000": "#a33d2a",
-        "#003a37": "#0f5c48",
-        "#560042": "#7a3a68",
-        "#133f00": "#2c6b3f",
-        "#a00283": "#b3568f",
-        "#3b67e2": "#4d8fd6",
-        "#e07f00": "#d9a441",
-        "#bc00a1": "#c05aa8"
-      }
+      "fontFamily": "Georgia, 'Noto Serif', serif"
     },
     {
       "id": "imperial",
@@ -55,18 +44,7 @@
         "accent": "#e0563a",
         "text": "#4a1f14"
       },
-      "fontFamily": "'Palatino Linotype', 'Book Antiqua', Georgia, serif",
-      "colorMap": {
-        "#00082d": "#54101f",
-        "#870000": "#8f1d26",
-        "#003a37": "#00463f",
-        "#560042": "#6b1e50",
-        "#133f00": "#2f5a24",
-        "#a00283": "#a12d7d",
-        "#3b67e2": "#4668b8",
-        "#e07f00": "#d98a2b",
-        "#bc00a1": "#b02c93"
-      }
+      "fontFamily": "'Palatino Linotype', 'Book Antiqua', Georgia, serif"
     },
     {
       "id": "flat",
@@ -96,18 +74,7 @@
         "accent": "#b18cff",
         "text": "#e8e4ff"
       },
-      "fontFamily": "Georgia, serif",
-      "colorMap": {
-        "#00082d": "#8f7ad6",
-        "#870000": "#c96f8e",
-        "#003a37": "#6e9b8f",
-        "#560042": "#9a6fa8",
-        "#133f00": "#7fa06d",
-        "#a00283": "#b57ec5",
-        "#3b67e2": "#7a9be8",
-        "#e07f00": "#d4a96a",
-        "#bc00a1": "#a87cc0"
-      }
+      "fontFamily": "Georgia, serif"
     },
     {
       "id": "sakura",
@@ -122,18 +89,7 @@
         "accent": "#f08cae",
         "text": "#4a2432"
       },
-      "fontFamily": "Georgia, serif",
-      "colorMap": {
-        "#00082d": "#5c3448",
-        "#870000": "#b5475f",
-        "#003a37": "#44706a",
-        "#560042": "#7a4a72",
-        "#133f00": "#5d7a46",
-        "#a00283": "#c26aa8",
-        "#3b67e2": "#7d9bd0",
-        "#e07f00": "#e0973f",
-        "#bc00a1": "#c76ab0"
-      }
+      "fontFamily": "Georgia, serif"
     }
   ],
   "skins": [

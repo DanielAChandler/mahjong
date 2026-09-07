@@ -1,6 +1,5 @@
-//! Professional tile faces: the 碧海风 (Bihai feng) Wikimedia Commons set
-//! (CC BY-SA 4.0), embedded as optimized inner-SVG fragments and recolored
-//! per theme. Single source consumed by both apps.
+//! Original tile faces: clean, bold vector symbols (circles, sticks, and CJK
+//! text) in the traditional mahjong style. Single source consumed by both apps.
 
 use std::sync::OnceLock;
 
@@ -13,14 +12,8 @@ fn faces() -> &'static serde_json::Value {
     })
 }
 
-/// The 9 source colors used by the artwork, in canonical order.
-pub const SRC_PALETTE: [&str; 9] = [
-    "#00082d", "#870000", "#003a37", "#560042", "#133f00", "#a00283", "#3b67e2", "#e07f00",
-    "#bc00a1",
-];
-
-/// Complete tile face as an inner-SVG fragment, recolored for `theme_id`.
-/// Themes may override any subset of the 9 source colors.
+/// Complete tile face as an inner-SVG fragment. All faces use a fixed
+/// Vita-style palette (bold solid suit colors), so no per-theme recolor.
 pub fn face_svg(face_id: &str, theme_id: &str) -> String {
     let base = faces()
         .get("faces")
@@ -42,15 +35,15 @@ pub fn face_svg(face_id: &str, theme_id: &str) -> String {
     svg
 }
 
-/// Attribution required by the CC BY-SA license.
-pub const ATTRIBUTION: &str = "Tile art: 'Mahjong tiles' by 碧海风 (Bihai feng), CC BY-SA 4.0, via Wikimedia Commons";
+/// Attribution for the in-app credit.
+pub const ATTRIBUTION: &str = "Tile art: original vector graphics using traditional mahjong motifs.";
 
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
-    fn all_faces_present_and_recolored() {
+    fn all_faces_present_and_render() {
         let ids: Vec<String> = (1..=9)
             .flat_map(|i| [format!("dot{i}"), format!("bam{i}"), format!("chr{i}")])
             .chain(
@@ -63,14 +56,14 @@ mod tests {
         assert_eq!(ids.len(), 42);
         for id in &ids {
             let svg = face_svg(id, "classic");
-            assert!(svg.len() > 200, "{id} too small");
-            assert!(svg.contains("<path"), "{id} has no paths");
+            assert!(svg.len() > 40, "{id} too small");
+            assert!(
+                svg.contains("<circle")
+                    || svg.contains("<rect")
+                    || svg.contains("<text")
+                    || svg.contains("<path"),
+                "{id} has no drawn symbol"
+            );
         }
-        // midnight theme must actually recolor
-        let classic = face_svg("dot5", "classic");
-        let midnight = face_svg("dot5", "midnight");
-        assert_ne!(classic, midnight);
-        // attribution exported
-        assert!(ATTRIBUTION.contains("CC BY-SA"));
     }
 }

@@ -144,7 +144,7 @@ pub fn run() {
         <button id="menu-new">New game</button>
         <button id="menu-close">Close</button>
       </div>
-      <p class="menu-credit">Tile art: 碧海风 (Bihai feng), CC BY-SA 4.0 (Wikimedia Commons)</p>
+      <p class="menu-credit">Tile art: original vector graphics (traditional mahjong motifs)</p>
     </div>
   </div>
   <div id="toast" hidden></div>
@@ -235,9 +235,9 @@ fn render_board() {
             }
             tile.set_attribute("data-idx", &i.to_string()).unwrap();
             tile.set_attribute("data-face-id", FACE_IDS[face as usize]).unwrap();
-            // position: edge-to-edge (x*54, y*74) + small z lift
+            // position: edge-to-edge portrait grid (x*54, y*70) + small z lift
             let px = key.x as f64 * 54.0 + key.z as f64 * 6.0 + half_pad;
-            let py = key.y as f64 * 74.0 + (max_z as f64 - key.z as f64) * 10.0 + half_pad;
+            let py = key.y as f64 * 70.0 + (max_z as f64 - key.z as f64) * 9.0 + half_pad;
             let zidx = key.z as i32 * 1000 + key.y as i32 * 32 + key.x as i32;
             tile.set_attribute(
                 "style",
@@ -249,7 +249,7 @@ fn render_board() {
             .unwrap();
             let svg = mahjong_core::face_art::face_svg(FACE_IDS[face as usize], THEME_ID.with(|t| *t.borrow()));
             let face_html = format!(
-                r#"<div class="tile-side"></div><div class="tile-face" style="background:{}"><svg viewBox="0 0 139.764 200" width="100%" height="100%">{}</svg></div>"#,
+                r#"<div class="tile-side"></div><div class="tile-face" style="background:{}"><svg viewBox="0 0 100 130" width="100%" height="100%">{}</svg></div>"#,
                 theme.palette.tile_face, svg
             );
             tile.set_inner_html(&face_html);
@@ -271,7 +271,7 @@ fn render_board() {
         let z_spread = max_z as f64 * 6.0;
         // content box = content extent + uniform pad (centered via half_pad above)
         let bw = max_x as f64 * 54.0 + 54.0 + z_spread + 24.0;
-        let bh = max_y as f64 * 74.0 + 74.0 + 10.0 * (max_z as f64 + 1.0) + 24.0;
+        let bh = max_y as f64 * 70.0 + 70.0 + 9.0 * (max_z as f64 + 1.0) + 24.0;
         inner.set_attribute(
             "style",
             &format!("width:{}px;height:{}px;transform-origin:center center;", bw, bh),

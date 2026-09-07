@@ -29,15 +29,15 @@ export class Renderer {
   theme: ThemeTokens;
   dims: LayoutDims = { w: 10, h: 8, maxZ: 1 };
 
-  // tuned tile metrics (px at scale 1). Tiles are laid out EDGE-TO-EDGE
-  // (no overlap) like Vita Mahjong; the board is scaled to fit the
-  // viewport. Classic mahjong proportion (~0.73 W/H).
+  // tuned tile metrics (px at scale 1). Tiles are PORTRAIT (taller than wide,
+  // ~1:1.3 — the classic mahjong proportion) and laid out edge-to-edge (no
+  // overlap) like Vita Mahjong; the board scales to fit.
   TW = 54;
-  TH = 74;
-  PX = 54; // horizontal pitch (== TW, tiles touch, no overlap)
-  PY = 74; // vertical pitch (== TH)
+  TH = 70;
+  PX = 54; // horizontal pitch (== TW, tiles touch)
+  PY = 70; // vertical pitch (== TH)
   ZX = 6; // small horizontal offset per z layer (stacked look)
-  DZ = 10; // small vertical offset per z layer
+  DZ = 9; // small vertical offset per z layer
   PAD = 24; // uniform padding around the centered content box
   private skinCss: string | null = null;
 
@@ -162,7 +162,7 @@ export class Renderer {
     el.innerHTML = `
       <div class="tile-side"></div>
       <div class="tile-face" style="background:${t.palette.tileFace}">
-        <svg viewBox="0 0 139.764 200" width="100%" height="100%">${svg}</svg>
+        <svg viewBox="0 0 100 130" width="100%" height="100%">${svg}</svg>
       </div>`;
     el.style.setProperty("--tile-edge", t.palette.tileEdge);
     el.style.setProperty("--tile-side", t.palette.tileSide);
