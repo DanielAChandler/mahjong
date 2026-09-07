@@ -171,6 +171,9 @@ function applyTheme() {
 
 function openMenu() {
   const dlg = $("#menu-dialog") as HTMLDialogElement;
+  const credit = document.createElement("p");
+  credit.className = "menu-credit";
+  credit.textContent = "Tile art: 碧海风 (Bihai feng), CC BY-SA 4.0 (Wikimedia Commons)";
   dlg.innerHTML = `
     <h2>Mahjong Solitaire</h2>
     <section>
@@ -201,6 +204,7 @@ function openMenu() {
       <button data-act="reset">Reset everything</button>
     </section>
     <button data-act="close">Close</button>`;
+  dlg.appendChild(credit);
   openDialog(dlg);
 
   dlg.onclick = (e) => {

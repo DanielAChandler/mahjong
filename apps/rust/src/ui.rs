@@ -69,6 +69,7 @@ pub fn run() {
     </div>
   </header>
   <main id="board"></main>
+  <p id="credit" style="position:fixed;left:8px;bottom:calc(4px + env(safe-area-inset-bottom));font-size:9px;opacity:.55;color:#e8ecf4;z-index:5;pointer-events:none">Tile art: 碧海风, CC BY-SA 4.0 (Wikimedia Commons)</p>
   <div id="toast" hidden></div>
 </div>
 "#,
