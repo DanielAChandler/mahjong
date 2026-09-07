@@ -3,8 +3,8 @@
   --panel: #1b2230;
   --text: #e8ecf4;
   --accent: #e8b04b;
-  --tw: 56px;
-  --th: 72px;
+  --tw: 54px;
+  --th: 74px;
   font-family: "Inter", "Segoe UI", system-ui, sans-serif;
 }
 
@@ -83,30 +83,31 @@ html, body {
 
 .tile-face {
   position: absolute; inset: 0 3px 3px 0;
-  border-radius: 8px;
+  border-radius: 9px;
   display: flex; align-items: center; justify-content: center;
   /* carved-ivory bevel: bright top edge, dark bottom edge */
-  border-top: 1px solid rgb(255 255 255 / 0.75);
-  border-left: 1px solid rgb(255 255 255 / 0.5);
-  border-bottom: 1px solid rgb(0 0 0 / 0.25);
-  border-right: 1px solid rgb(0 0 0 / 0.15);
+  border-top: 1px solid rgb(255 255 255 / 0.8);
+  border-left: 1px solid rgb(255 255 255 / 0.55);
+  border-bottom: 1px solid rgb(0 0 0 / 0.28);
+  border-right: 1px solid rgb(0 0 0 / 0.16);
   box-shadow:
     0 3px 8px rgb(0 0 0 / 0.4),
-    inset 0 1px 0 rgb(255 255 255 / 0.6),
+    inset 0 0 0 2px var(--tile-edge, #d9cfb8),
+    inset 0 1px 0 rgb(255 255 255 / 0.65),
     inset 0 -2px 3px rgb(0 0 0 / 0.12);
 }
 /* glossy sheen across the top third of the face */
 .tile-face::before {
   content: "";
   position: absolute; inset: 0;
-  border-radius: 8px;
+  border-radius: 9px;
   background: linear-gradient(180deg, rgb(255 255 255 / 0.28) 0%, rgb(255 255 255 / 0.06) 32%, transparent 55%);
   pointer-events: none;
 }
 .tile-side {
   position: absolute; inset: 3px 0 0 3px;
   background: linear-gradient(180deg, var(--tile-side, #c9bd9f) 0%, color-mix(in srgb, var(--tile-side, #c9bd9f) 72%, #000) 100%);
-  border-radius: 8px;
+  border-radius: 9px;
   box-shadow: 0 1px 0 rgb(255 255 255 / 0.15) inset;
 }
 

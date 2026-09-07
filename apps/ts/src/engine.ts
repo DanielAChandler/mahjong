@@ -56,6 +56,10 @@ export class Game {
     private sound: boolean,
   ) {}
 
+  setSound(on: boolean) {
+    this.sound = on;
+  }
+
   async start(mode: Mode) {
     this.puzzle =
       mode.kind === "campaign"

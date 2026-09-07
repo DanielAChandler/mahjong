@@ -29,10 +29,12 @@ export class Renderer {
   theme: ThemeTokens;
   dims: LayoutDims = { w: 10, h: 8, maxZ: 1 };
 
-  // tuned tile metrics (px at scale 1)
-  TW = 56;
-  TH = 72;
+  // tuned tile metrics (px at scale 1) — classic mahjong proportion (~0.73 W/H)
+  TW = 54;
+  TH = 74;
   DZ = 14; // visual z offset (isometric-ish)
+  PAD = 36; // uniform padding around the centered content box
+  private skinCss: string | null = null;
 
   constructor(root: HTMLElement, theme: ThemeTokens) {
     this.root = root;
@@ -69,6 +71,12 @@ export class Renderer {
     }
   }
 
+  /** Board background skin (a fixed gradient) or null = theme gradient. */
+  setSkin(css: string | null) {
+    this.skinCss = css;
+    this.paintBoard();
+  }
+
   /** idx -> (x,y,z) mapping from the compiled layout (engine supplies). */
   setGeometry(dims: LayoutDims) {
     this.dims = dims;
@@ -85,14 +93,12 @@ export class Renderer {
     // content extent: tiles span x*TW .. x*TW + TW + z*10 (right) and
     // y*TH .. y*TH + TH + maxZ*DZ (down). Box = content + uniform pad, and
     // content is centered inside the box so the VISIBLE pile is centered.
-    const pad = this.TW;
+    const pad = this.PAD;
     const zSpread = this.dims.maxZ * 10;
     const contentW = this.dims.w * this.TW + zSpread;
     const contentH = this.dims.h * this.TH + this.DZ * (this.dims.maxZ + 1);
     this.boardEl.style.width = `${contentW + pad}px`;
     this.boardEl.style.height = `${contentH + pad}px`;
-    // offset so content is centered within the box (pad/2 on each side)
-    this.boardEl.style.setProperty("--z-shift", `${pad / 2}px`);
 
     for (const t of tiles) {
       if (t.removed) continue;
@@ -135,8 +141,8 @@ export class Renderer {
   }
 
   positionTile(el: HTMLElement, t: RenderTile) {
-    const px = t.x * this.TW + t.z * 10 + this.TW / 2;
-    const py = t.y * this.TH + (this.dims.maxZ - t.z) * this.DZ + this.TW / 2;
+    const px = t.x * this.TW + t.z * 10 + this.PAD / 2;
+    const py = t.y * this.TH + (this.dims.maxZ - t.z) * this.DZ + this.PAD / 2;
     el.style.left = `${px}px`;
     el.style.top = `${py}px`;
     el.style.zIndex = String(t.z * 100 + t.y * 2);
@@ -194,9 +200,14 @@ export class Renderer {
 
   private paintBoard() {
     const t = this.theme;
-    // drive the CSS-gradient vars so the vignette overlay stays intact
-    this.boardEl.parentElement!.style.setProperty("--skin-a", t.palette.boardBg);
-    this.boardEl.parentElement!.style.setProperty("--skin-b", t.palette.boardBg2);
-    this.boardEl.parentElement!.style.background = "";
+    const board = this.boardEl.parentElement!;
+    if (this.skinCss) {
+      board.style.background = this.skinCss;
+    } else {
+      // drive the CSS-gradient vars so the vignette overlay stays intact
+      board.style.setProperty("--skin-a", t.palette.boardBg);
+      board.style.setProperty("--skin-b", t.palette.boardBg2);
+      board.style.background = "";
+    }
   }
 }

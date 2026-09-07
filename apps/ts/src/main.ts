@@ -180,6 +180,16 @@ function toast(msg: string) {
 function applyTheme() {
   document.body.dataset.theme = save.settings.theme;
   renderer?.setTheme(themeById(save.settings.theme));
+  applySkin();
+}
+
+function skinCss(id: string): string | null {
+  const s = SKINS.find((sk) => sk.id === id);
+  return s && s.id !== "felt" ? s.css : null;
+}
+
+function applySkin() {
+  renderer?.setSkin(skinCss(save.settings.skin));
 }
 
 function openMenu() {
@@ -208,6 +218,8 @@ function openMenu() {
       <div class="theme-row">
         ${SKINS.map((s) => `<button data-skin="${s.id}" class="${save.settings.skin === s.id ? "active" : ""}">${s.name}</button>`).join("")}
       </div>
+      <h3>Sound</h3>
+      <button data-act="sound">🔊 Sound: ${save.settings.sound ? "On" : "Off"}</button>
     </section>
     <section>
       <h3>Progress</h3>
@@ -233,10 +245,17 @@ function openMenu() {
     if (el.dataset.skin) {
       save.settings.skin = el.dataset.skin;
       persist.save(save);
+      applySkin();
       openMenu();
       return;
     }
     switch (el.dataset.act) {
+      case "sound":
+        save.settings.sound = !save.settings.sound;
+        persist.save(save);
+        game?.setSound(save.settings.sound);
+        openMenu();
+        return;
       case "next":
         currentMode = { kind: "campaign", level: nextLevel() };
         closeDialog(dlg);

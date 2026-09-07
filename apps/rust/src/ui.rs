@@ -27,10 +27,62 @@ pub struct AppState {
 
 thread_local! {
     static THEME_ID: std::cell::RefCell<&'static str> = const { std::cell::RefCell::new("classic") };
+    static SKIN_ID: std::cell::RefCell<&'static str> = const { std::cell::RefCell::new("felt") };
+    static SOUND_ON: std::cell::RefCell<bool> = const { std::cell::RefCell::new(true) };
 }
 
 fn set_theme(id: &'static str) {
     THEME_ID.with(|t| *t.borrow_mut() = id);
+    persist_settings();
+}
+
+fn set_skin(id: &'static str) {
+    SKIN_ID.with(|t| *t.borrow_mut() = id);
+    persist_settings();
+}
+
+fn set_sound(on: bool) {
+    SOUND_ON.with(|t| *t.borrow_mut() = on);
+    persist_settings();
+}
+
+fn sound_on() -> bool {
+    SOUND_ON.with(|t| *t.borrow())
+}
+
+const LS_KEY: &str = "mahjong-rust.v1";
+
+/// Persist theme/skin/sound to localStorage (matches the TS app's persistence).
+fn persist_settings() {
+    let theme = THEME_ID.with(|t| *t.borrow());
+    let skin = SKIN_ID.with(|t| *t.borrow());
+    let sound = SOUND_ON.with(|t| *t.borrow());
+    let json = format!(
+        r#"{{"theme":"{theme}","skin":"{skin}","sound":{sound}}}"#
+    );
+    if let Some(storage) = window().unwrap().local_storage().ok().flatten() {
+        storage.set_item(LS_KEY, &json).ok();
+    }
+}
+
+fn load_settings() {
+    if let Some(storage) = window().unwrap().local_storage().ok().flatten() {
+        if let Ok(Some(raw)) = storage.get_item(LS_KEY) {
+            if let Ok(v) = serde_json::from_str::<serde_json::Value>(&raw) {
+                if let Some(t) = v.get("theme").and_then(|x| x.as_str()) {
+                    let id: &'static str = Box::leak(t.to_string().into_boxed_str());
+                    THEME_ID.with(|x| *x.borrow_mut() = id);
+                }
+                if let Some(s) = v.get("skin").and_then(|x| x.as_str()) {
+                    let id: &'static str = Box::leak(s.to_string().into_boxed_str());
+                    SKIN_ID.with(|x| *x.borrow_mut() = id);
+                }
+                if let Some(s) = v.get("sound").and_then(|x| x.as_bool()) {
+                    SOUND_ON.with(|x| *x.borrow_mut() = s);
+                }
+            }
+        }
+    }
 }
 
 thread_local! {
@@ -80,6 +132,14 @@ pub fn run() {
         <h3>Theme</h3>
         <div id="menu-themes"></div>
       </div>
+      <div class="menu-section">
+        <h3>Board skin</h3>
+        <div id="menu-skins"></div>
+      </div>
+      <div class="menu-section">
+        <h3>Sound</h3>
+        <button id="menu-sound" class="menu-toggle">🔊 Sound: On</button>
+      </div>
       <div class="menu-actions">
         <button id="menu-new">New game</button>
         <button id="menu-close">Close</button>
@@ -92,6 +152,7 @@ pub fn run() {
 "#,
     );
 
+    load_settings();
     apply_theme_shell();
     start_campaign(1);
     bind_toolbar();
@@ -154,7 +215,13 @@ fn render_board() {
 
         let free: Vec<usize> = board.all_free();
         let max_z = board.layout.max_z();
-        let half_pad = 28.0_f64; // 56/2 — content centered inside the padded box
+        let half_pad = 18.0_f64; // 36/2 — content centered inside the padded box
+        let theme = mahjong_core::themes::embedded()
+            .themes
+            .iter()
+            .find(|t| t.id == THEME_ID.with(|t| *t.borrow()))
+            .cloned()
+            .unwrap_or_else(|| mahjong_core::themes::embedded().themes[0].clone());
         for i in 0..board.faces.len() {
             let face = board.faces[i];
             if face == u8::MAX {
@@ -169,17 +236,20 @@ fn render_board() {
             tile.set_attribute("data-idx", &i.to_string()).unwrap();
             tile.set_attribute("data-face-id", FACE_IDS[face as usize]).unwrap();
             // position: x * TW + z*10, y * TH + (maxZ - z) * DZ
-            let px = key.x as f64 * 56.0 + key.z as f64 * 10.0 + half_pad;
-            let py = key.y as f64 * 72.0 + (max_z as f64 - key.z as f64) * 14.0 + half_pad;
+            let px = key.x as f64 * 54.0 + key.z as f64 * 10.0 + half_pad;
+            let py = key.y as f64 * 74.0 + (max_z as f64 - key.z as f64) * 14.0 + half_pad;
             tile.set_attribute(
                 "style",
-                &format!("left:{}px;top:{}px;", px, py),
+                &format!(
+                    "left:{}px;top:{}px;--tile-edge:{};--tile-side:{};",
+                    px, py, theme.palette.tile_edge, theme.palette.tile_side
+                ),
             )
             .unwrap();
             let svg = mahjong_core::face_art::face_svg(FACE_IDS[face as usize], THEME_ID.with(|t| *t.borrow()));
             let face_html = format!(
-                r#"<div class="tile-side"></div><div class="tile-face" style="background:#f7f2e7"><svg viewBox="0 0 139.764 200" width="100%" height="100%">{}</svg></div>"#,
-                svg
+                r#"<div class="tile-side"></div><div class="tile-face" style="background:{}"><svg viewBox="0 0 139.764 200" width="100%" height="100%">{}</svg></div>"#,
+                theme.palette.tile_face, svg
             );
             tile.set_inner_html(&face_html);
             {
@@ -199,8 +269,8 @@ fn render_board() {
         let max_y = board.layout.keys.iter().map(|k| k.y).max().unwrap_or(7);
         let z_spread = max_z as f64 * 10.0;
         // content box = content extent + uniform pad (centered via half_pad above)
-        let bw = (max_x + 1) as f64 * 56.0 + z_spread + 56.0;
-        let bh = (max_y + 1) as f64 * 72.0 + 14.0 * (max_z as f64 + 1.0) + 56.0;
+        let bw = (max_x + 1) as f64 * 54.0 + z_spread + 36.0;
+        let bh = (max_y + 1) as f64 * 74.0 + 14.0 * (max_z as f64 + 1.0) + 36.0;
         inner.set_attribute(
             "style",
             &format!("width:{}px;height:{}px;transform-origin:center center;", bw, bh),
@@ -240,6 +310,7 @@ fn on_tile(idx: usize) {
             None => {
                 st.selected = Some(idx);
                 highlight_selection(Some(idx));
+                beep(520.0, 0.06, 0.10);
             }
             Some(sel) if sel == idx => {
                 st.selected = None;
@@ -249,6 +320,7 @@ fn on_tile(idx: usize) {
                 if board.remove_pair(sel, idx) {
                     st.selected = None;
                     highlight_selection(None);
+                    beep(660.0, 0.09, 0.14);
                     drop(st);
                     render_board();
                     STATE.with(|s| {
@@ -387,12 +459,15 @@ fn open_menu() {
     // themes
     let tlist = el("menu-themes");
     tlist.set_inner_html("");
+    let current_theme = THEME_ID.with(|t| *t.borrow());
     for t in mahjong_core::themes::embedded().themes.iter() {
         let id: &'static str = Box::leak(t.id.clone().into_boxed_str());
         let btn = doc().create_element("button").unwrap();
         btn.set_text_content(Some(&t.name));
+        if t.id == current_theme {
+            btn.set_class_name("active");
+        }
         let closure = Closure::<dyn Fn(_)>::new(move |_: wasm_bindgen::JsValue| {
-            el("menu-overlay").set_attribute("hidden", "").ok();
             set_theme(id);
             apply_theme_shell();
             render_board();
@@ -403,6 +478,51 @@ fn open_menu() {
         closure.forget();
         tlist.append_child(&btn).unwrap();
     }
+
+    // skins
+    let slist = el("menu-skins");
+    slist.set_inner_html("");
+    let current_skin = SKIN_ID.with(|t| *t.borrow());
+    for s in mahjong_core::themes::embedded().skins.iter() {
+        let id: &'static str = Box::leak(s.id.clone().into_boxed_str());
+        let btn = doc().create_element("button").unwrap();
+        btn.set_text_content(Some(&s.name));
+        if s.id == current_skin {
+            btn.set_class_name("active");
+        }
+        let closure = Closure::<dyn Fn(_)>::new(move |_: wasm_bindgen::JsValue| {
+            set_skin(id);
+            apply_theme_shell();
+        });
+        btn.dyn_ref::<HtmlElement>()
+            .unwrap()
+            .set_onclick(Some(closure.as_ref().unchecked_ref()));
+        closure.forget();
+        slist.append_child(&btn).unwrap();
+    }
+
+    // sound toggle (rebuild label each open)
+    let sound_btn = el("menu-sound");
+    sound_btn.set_text_content(Some(&format!(
+        "🔊 Sound: {}",
+        if sound_on() { "On" } else { "Off" }
+    )));
+    {
+        let closure = Closure::<dyn Fn(_)>::new(move |_: wasm_bindgen::JsValue| {
+            set_sound(!sound_on());
+            let b = el("menu-sound");
+            b.set_text_content(Some(&format!(
+                "🔊 Sound: {}",
+                if sound_on() { "On" } else { "Off" }
+            )));
+        });
+        sound_btn
+            .dyn_ref::<HtmlElement>()
+            .unwrap()
+            .set_onclick(Some(closure.as_ref().unchecked_ref()));
+        closure.forget();
+    }
+
     overlay.remove_attribute("hidden").ok();
 }
 
@@ -414,11 +534,23 @@ fn apply_theme_shell() {
         .find(|t| t.id == THEME_ID.with(|t| *t.borrow()))
         .cloned()
         .unwrap_or_else(|| mahjong_core::themes::embedded().themes[0].clone());
-    // drive the CSS skin vars on #board so the vignette overlay stays intact
+    let skin_id = SKIN_ID.with(|t| *t.borrow());
+    let skin_css = mahjong_core::themes::embedded()
+        .skins
+        .iter()
+        .find(|s| s.id == skin_id && s.id != "felt")
+        .map(|s| s.css.clone());
+
     if let Some(b) = doc().get_element_by_id("board") {
         let st = b.dyn_ref::<HtmlElement>().unwrap().style();
-        st.set_property("--skin-a", &theme.palette.board_bg).ok();
-        st.set_property("--skin-b", &theme.palette.board_bg2).ok();
+        if let Some(css) = skin_css {
+            st.set_property("background", &css).ok();
+        } else {
+            // drive the CSS skin vars so the vignette overlay stays intact
+            st.set_property("--skin-a", &theme.palette.board_bg).ok();
+            st.set_property("--skin-b", &theme.palette.board_bg2).ok();
+            st.set_property("background", "").ok();
+        }
     }
     if let Some(h) = doc().get_element_by_id("topbar") {
         h.dyn_ref::<HtmlElement>()
@@ -459,4 +591,38 @@ fn toast(msg: &str) {
 
 fn now_ms() -> f64 {
     window().unwrap().performance().unwrap().now()
+}
+
+/// Minimal WebAudio beep (matches the TS app's synth feedback).
+fn audio_ctx() -> Option<web_sys::AudioContext> {
+    thread_local! {
+        static CTX: std::cell::RefCell<Option<web_sys::AudioContext>> =
+            const { std::cell::RefCell::new(None) };
+    }
+    CTX.with(|c| {
+        if c.borrow().is_none() {
+            *c.borrow_mut() = web_sys::AudioContext::new().ok();
+        }
+        c.borrow().clone()
+    })
+}
+
+fn beep(freq: f32, dur: f32, gain: f32) {
+    if !sound_on() {
+        return;
+    }
+    let Some(ctx) = audio_ctx() else { return };
+    let now = ctx.current_time();
+    let (Ok(osc), Ok(g)) = (ctx.create_oscillator(), ctx.create_gain()) else {
+        return;
+    };
+    osc.frequency().set_value(freq);
+    g.gain().set_value(gain);
+    g.gain()
+        .exponential_ramp_to_value_at_time(0.001, now + dur as f64)
+        .ok();
+    osc.connect_with_audio_node(&g).ok();
+    g.connect_with_audio_node(&ctx.destination()).ok();
+    osc.start().ok();
+    osc.stop_with_when(now + dur as f64).ok();
 }

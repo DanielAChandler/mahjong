@@ -1,0 +1,108 @@
+/* Rust app menu overlay — separate from the shared style.css so syncing the
+   shared tile CSS never wipes these app-specific styles. */
+
+#menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(0 0 0 / 0.55);
+  padding: 16px;
+}
+#menu-overlay[hidden] {
+  display: none;
+}
+
+#menu-panel {
+  background: var(--panel, #1b2230);
+  color: var(--text, #e8ecf4);
+  border: 1px solid #39465e;
+  border-radius: 16px;
+  padding: 18px 20px;
+  width: min(92vw, 420px);
+  max-height: 84dvh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+#menu-panel h2 {
+  margin: 0 0 8px;
+  font-size: 20px;
+}
+#menu-panel h3 {
+  margin: 14px 0 6px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.65;
+}
+#menu-panel p {
+  margin: 4px 0;
+}
+
+.menu-section {
+  margin: 8px 0;
+}
+#menu-layouts,
+#menu-themes,
+#menu-skins {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+#menu-layouts button,
+#menu-themes button,
+#menu-skins button {
+  background: #232c3d;
+  color: var(--text, #e8ecf4);
+  border: 1px solid #39465e;
+  border-radius: 10px;
+  padding: 8px 11px;
+  cursor: pointer;
+  text-align: left;
+  font-size: 13px;
+}
+#menu-layouts button:hover,
+#menu-themes button:hover,
+#menu-skins button:hover {
+  border-color: var(--accent, #e8b04b);
+}
+#menu-layouts button.active,
+#menu-themes button.active,
+#menu-skins button.active {
+  border-color: var(--accent, #e8b04b);
+  background: rgb(232 176 75 / 0.15);
+}
+
+.menu-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+.menu-actions button {
+  flex: 1;
+  background: #232c3d;
+  color: var(--text, #e8ecf4);
+  border: 1px solid #39465e;
+  border-radius: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+.menu-actions button:hover {
+  border-color: var(--accent, #e8b04b);
+}
+
+.menu-credit {
+  margin-top: 14px;
+  font-size: 11px;
+  opacity: 0.55;
+  line-height: 1.4;
+}
+
+.menu-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}

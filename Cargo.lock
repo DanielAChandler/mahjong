@@ -124,6 +124,7 @@ version = "1.0.0"
 dependencies = [
  "console_error_panic_hook",
  "mahjong-core",
+ "serde_json",
  "wasm-bindgen",
  "wasm-bindgen-test",
  "web-sys",
