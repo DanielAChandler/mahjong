@@ -29,17 +29,15 @@ export class Renderer {
   theme: ThemeTokens;
   dims: LayoutDims = { w: 10, h: 8, maxZ: 1 };
 
-  // tuned tile metrics (px at scale 1). Tiles OVERLAP like real mahjong
-  // solitaire: horizontal pitch = half a tile, vertical pitch ≈ 0.6 tile.
-  // This halves board width (=> ~2× bigger tiles) and gives the dense,
-  // "large tiles" look of Vita Mahjong. The solver's free-tile logic works
-  // on logical (x,y,z) grid coords, so this is a render-only change.
+  // tuned tile metrics (px at scale 1). Tiles are laid out EDGE-TO-EDGE
+  // (no overlap) like Vita Mahjong; the board is scaled to fit the
+  // viewport. Classic mahjong proportion (~0.73 W/H).
   TW = 54;
   TH = 74;
-  PX = 27; // horizontal pitch (50% overlap)
-  PY = 44; // vertical pitch (~40% overlap)
-  ZX = 6; // horizontal offset per z layer
-  DZ = 10; // vertical offset per z layer
+  PX = 54; // horizontal pitch (== TW, tiles touch, no overlap)
+  PY = 74; // vertical pitch (== TH)
+  ZX = 6; // small horizontal offset per z layer (stacked look)
+  DZ = 10; // small vertical offset per z layer
   PAD = 24; // uniform padding around the centered content box
   private skinCss: string | null = null;
 

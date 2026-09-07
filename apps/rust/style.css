@@ -82,43 +82,30 @@ html, body {
 }
 
 .tile-face {
-  position: absolute; inset: 0 3px 3px 0;
-  border-radius: 9px;
+  position: absolute; inset: 0 4px 4px 0;
+  border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
-  /* carved-ivory bevel: bright top edge, dark bottom edge */
-  border-top: 1px solid rgb(255 255 255 / 0.8);
-  border-left: 1px solid rgb(255 255 255 / 0.55);
-  border-bottom: 1px solid rgb(0 0 0 / 0.28);
-  border-right: 1px solid rgb(0 0 0 / 0.16);
-  box-shadow:
-    0 3px 8px rgb(0 0 0 / 0.4),
-    inset 0 0 0 2px var(--tile-edge, #d9cfb8),
-    inset 0 1px 0 rgb(255 255 255 / 0.65),
-    inset 0 -2px 3px rgb(0 0 0 / 0.12);
-}
-/* glossy sheen across the top third of the face */
-.tile-face::before {
-  content: "";
-  position: absolute; inset: 0;
-  border-radius: 9px;
-  background: linear-gradient(180deg, rgb(255 255 255 / 0.28) 0%, rgb(255 255 255 / 0.06) 32%, transparent 55%);
-  pointer-events: none;
+  /* clean matte ivory face; the suit art carries its own frame */
+  box-shadow: 0 2px 5px rgb(0 0 0 / 0.28);
+  overflow: hidden;
 }
 .tile-side {
-  position: absolute; inset: 3px 0 0 3px;
-  background: linear-gradient(180deg, var(--tile-side, #c9bd9f) 0%, color-mix(in srgb, var(--tile-side, #c9bd9f) 72%, #000) 100%);
-  border-radius: 9px;
-  box-shadow: 0 1px 0 rgb(255 255 255 / 0.15) inset;
+  position: absolute; inset: 4px 0 0 4px;
+  background: var(--tile-side, #c9bd9f);
+  border-radius: 8px;
 }
 
 .tile.free { opacity: 1; }
-.tile:not(.free) { opacity: 0.5; cursor: default; filter: saturate(0.72); }
-.tile.free:hover { transform: translateY(-3px); }
+.tile:not(.free) {
+  cursor: default;
+  filter: brightness(0.78) saturate(0.68); /* solid, muted — no transparency */
+}
+.tile.free:hover { transform: translateY(-2px); }
 .tile.free::after {
   content: "";
-  position: absolute; inset: 0 3px 3px 0;
+  position: absolute; inset: 0 4px 4px 0;
   border-radius: 8px;
-  box-shadow: 0 1px 3px rgb(0 0 0 / 0.35);
+  box-shadow: 0 2px 4px rgb(0 0 0 / 0.35);
   pointer-events: none;
 }
 .tile.selected {
