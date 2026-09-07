@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "themes": [
+    {
+      "id": "classic",
+      "name": "Classic Ivory",
+      "style": "classic",
+      "palette": {
+        "boardBg": "#1d4d3a",
+        "boardBg2": "#0e2f23",
+        "tileFace": "#f7f2e7",
+        "tileEdge": "#d9cfb8",
+        "tileSide": "#c9bd9f",
+        "accent": "#e8b04b",
+        "text": "#4a3f2a"
+      },
+      "fontFamily": "Georgia, 'Noto Serif', serif"
+    },
+    {
+      "id": "flat",
+      "name": "Modern Flat",
+      "style": "flat",
+      "palette": {
+        "boardBg": "#232936",
+        "boardBg2": "#151a24",
+        "tileFace": "#eef1f6",
+        "tileEdge": "#ffffff",
+        "tileSide": "#9aa3b2",
+        "accent": "#4f8cff",
+        "text": "#2a3040"
+      },
+      "fontFamily": "Inter, 'Segoe UI', system-ui, sans-serif"
+    },
+    {
+      "id": "midnight",
+      "name": "Midnight Garden",
+      "style": "seasonal",
+      "palette": {
+        "boardBg": "#14121f",
+        "boardBg2": "#0b0a12",
+        "tileFace": "#2a2740",
+        "tileEdge": "#3d3960",
+        "tileSide": "#191627",
+        "accent": "#b18cff",
+        "text": "#e8e4ff"
+      },
+      "fontFamily": "Georgia, serif"
+    }
+  ],
+  "skins": [
+    { "id": "felt", "name": "Felt", "css": "radial-gradient(ellipse at center, #1d4d3a 0%, #0e2f23 70%)" },
+    { "id": "wood", "name": "Wood", "css": "linear-gradient(135deg, #5a3b1e 0%, #3a2513 100%)" },
+    { "id": "slate", "name": "Slate", "css": "linear-gradient(160deg, #2b3440 0%, #171d26 100%)" }
+  ]
+}

@@ -1,0 +1,7 @@
+[workspace]
+resolver = "2"
+members = ["crates/mahjong-core", "crates/mahjong-wasm", "apps/rust"]
+
+[profile.release]
+opt-level = "s"
+lto = true

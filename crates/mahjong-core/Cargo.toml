@@ -1,0 +1,13 @@
+[package]
+name = "mahjong-core"
+version = "1.0.0"
+edition = "2021"
+description = "Shared mahjong solitaire core: deterministic PRNG, layout compiler, puzzle generator, solver, hints"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[[bin]]
+name = "gen-campaign"
+path = "src/bin/gen_campaign.rs"

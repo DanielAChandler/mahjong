@@ -1,0 +1,113 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  core-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Shared data is up to date (determinism check)
+        run: |
+          cargo run --release -p mahjong-core --bin gen-campaign -- --check
+      - name: Core unit + integration tests
+        run: cargo test -p mahjong-core --release
+      - name: Solver spot-check across a sample of generated ids
+        run: cargo test -p mahjong-core --release solver -- --nocapture
+
+  wasm-core:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: jetli/wasm-pack-action@v0.4.0
+        with:
+          version: v0.13.1
+      - name: Build wasm core
+        run: wasm-pack build crates/mahjong-wasm --target web --out-dir ../../apps/ts/wasm-core --release
+
+  ts-app:
+    runs-on: ubuntu-latest
+    needs: [core-tests, wasm-core]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: jetli/wasm-pack-action@v0.4.0
+        with:
+          version: v0.13.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build wasm core
+        run: wasm-pack build crates/mahjong-wasm --target web --out-dir ../../apps/ts/wasm-core --release
+      - name: Cross-implementation determinism (wasm vs native hashes)
+        working-directory: apps/ts
+        run: node scripts/check-determinism.mjs
+      - name: API smoke test — play full puzzle through UI-facing calls
+        working-directory: apps/ts
+        run: node scripts/play-solution.mjs
+      - name: Typecheck + build TS app
+        working-directory: apps/ts
+        run: |
+          npm ci
+          npm run check
+          npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          name: pages-ts
+          path: apps/ts/dist
+
+  rust-app:
+    runs-on: ubuntu-latest
+    needs: [core-tests]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: jetli/wasm-pack-action@v0.4.0
+        with:
+          version: v0.13.1
+      - name: Install trunk
+        run: cargo install trunk --locked
+      - name: Build Rust app (trunk release)
+        working-directory: apps/rust
+        run: trunk build --release
+      - name: Add preview banner context
+        run: echo "rust app built" 
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          name: pages-rust
+          path: apps/rust/dist
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    needs: [ts-app, rust-app]
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          artifact_name: pages-ts
+      - name: Deploy Rust app to /rust subpath preview
+        run: echo "Rust artifact available as pages-rust (see Actions artifacts)"

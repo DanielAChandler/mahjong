@@ -1,0 +1,6 @@
+/target
+node_modules
+dist
+apps/ts/wasm-core
+*.log
+.DS_Store

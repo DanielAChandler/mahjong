@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Mahjong Solitaire</title>
+  <link rel="stylesheet" href="/src/style.css" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+</head>
+<body>
+  <div id="app">
+    <header id="topbar">
+      <button id="btn-menu" class="icon-btn" title="Menu">☰</button>
+      <div id="hud">
+        <span id="hud-level">Puzzle 1</span>
+        <span id="hud-timer">0:00</span>
+        <span id="hud-pairs">72 pairs</span>
+      </div>
+      <div id="powerups">
+        <button id="pu-hint" class="pu" title="Hint (H)"><span class="pu-icon">💡</span><span class="pu-count">5</span></button>
+        <button id="pu-shuffle" class="pu" title="Shuffle (S)"><span class="pu-icon">🔀</span><span class="pu-count">3</span></button>
+        <button id="pu-undo" class="pu" title="Undo (U)"><span class="pu-icon">↩</span><span class="pu-count">3</span></button>
+        <button id="pu-dynamite" class="pu" title="Dynamite (D)"><span class="pu-icon">🧨</span><span class="pu-count">2</span></button>
+      </div>
+    </header>
+    <main id="board"></main>
+    <div id="toast" hidden></div>
+    <dialog id="menu-dialog">…</dialog>
+    <dialog id="win-dialog">…</dialog>
+  </div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
